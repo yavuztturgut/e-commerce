@@ -1,9 +1,12 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductList from './ProductList';
-import Cart from './Cart';
-import './App.css'; // Yeni CSS dosyamızı dahil ediyoruz
-import cerenaden from './cerenaden.png';
+import Product from './Product';
+import Navbar from './Navbar'; // YENİ: Navbar'ı dahil ettik
+import './App.css';
+
+// cerenaden.png ve Cart importlarını kaldırdık (Navbar'a taşıdık)
 
 function App() {
     const [products, setProducts] = useState([]);
@@ -25,7 +28,6 @@ function App() {
             });
     }, []);
 
-    // --- SEPETE EKLEME VE STOK DÜŞME MANTIĞI ---
     const addToCart = (productToAdd) => {
         if (productToAdd.stock <= 0) return;
 
@@ -45,33 +47,49 @@ function App() {
         setIsCartOpen(!isCartOpen);
     };
 
+    const removeFromCart = (indexToRemove) => {
+        // Tıklanan sıradaki (index) ürünü filtreleyerek yeni liste oluşturuyoruz
+        const updatedCart = cart.filter((_, index) => index !== indexToRemove);
+        setCart(updatedCart);
+
+        // Eğer sepet boşaldıysa sepeti kapatabiliriz (isteğe bağlı)
+        if (updatedCart.length === 0) {
+            setIsCartOpen(false);
+        }
+    };
     return (
-        <div className="App">
-            {/* Header - Sticky ve Gölgeli */}
-            <header className="app-header">
-              <img src={cerenaden} className="App-logo" alt="logo" />
-            </header>
+        <Router>
+            <div className="App">
 
-            {/* Sepet Bileşeni */}
-            <Cart
-                cartItems={cart}
-                isOpen={isCartOpen}
-                toggleCart={toggleCart}
-            />
+                {/* ESKİ KODLAR YERİNE SADECE BU SATIR GELDİ */}
+                <Navbar
+                    cart={cart}
+                    isCartOpen={isCartOpen}
+                    toggleCart={toggleCart}
+                    removeFromCart={removeFromCart}
+                />
 
-            {/* Ana İçerik */}
-            <main className="app-main">
-                {loading ? (
-                    // Profesyonel Loading Ekranı
-                    <div className="loading-container">
-                        <div className="spinner"></div>
-                        <span>Ürünler yükleniyor...</span>
-                    </div>
-                ) : (
-                    <ProductList products={products} addToCart={addToCart} />
-                )}
-            </main>
-        </div>
+                <main className="app-main">
+                    {loading ? (
+                        <div className="loading-container">
+                            <div className="spinner"></div>
+                            <span>Ürünler yükleniyor...</span>
+                        </div>
+                    ) : (
+                        <Routes>
+                            <Route
+                                path="/"
+                                element={<ProductList products={products} addToCart={addToCart} />}
+                            />
+                            <Route
+                                path="/product/:id"
+                                element={<Product addToCart={addToCart} />}
+                            />
+                        </Routes>
+                    )}
+                </main>
+            </div>
+        </Router>
     );
 }
 

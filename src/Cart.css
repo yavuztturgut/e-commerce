@@ -174,3 +174,26 @@
 .cart-items-list::-webkit-scrollbar-thumb:hover {
     background: #bbb;
 }
+
+/* Silme Butonu Stili */
+.remove-btn {
+    background: transparent;
+    border: none;
+    color: #999; /* Gri renk */
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+/* Üzerine gelince kırmızı olsun */
+.remove-btn:hover {
+    color: #ff4d4d;
+    background-color: #fff0f0;
+}

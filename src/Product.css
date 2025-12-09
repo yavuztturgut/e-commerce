@@ -1,0 +1,153 @@
+/* src/Product.css */
+
+/* Ana Kapsayıcı */
+.product-detail-container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Yükleniyor ve Hata Mesajları */
+.loading-msg, .error-msg {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 1.2rem;
+    color: white;
+}
+
+/* Geri Dön Butonu */
+.back-btn {
+    background-color: #ffa9d9;
+    color: white;
+    margin-bottom: 20px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border: 1px solid #ffa9d9; /* Border rengi düzeltildi */
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-btn:hover {
+    background-color: #ff99d2;
+    transform: translateX(-5px); /* Hoverda hafif sola kayma efekti */
+}
+
+/* Ürün Kartı (Beyaz Alan) */
+.product-detail-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* --- SOL TARAF (RESİMLER) --- */
+.product-image-section {
+    flex: 1 1 400px;
+}
+
+.main-img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    display: block;
+}
+
+.thumbnails-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    overflow-x: auto;
+    padding-bottom: 5px; /* Scrollbar için boşluk */
+}
+
+.thumb-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid #eee;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.thumb-img:hover {
+    border-color: #ffa9d9;
+}
+
+/* --- SAĞ TARAF (BİLGİLER) --- */
+.product-info-section {
+    flex: 1 1 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.detail-title {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+.detail-category {
+    color: #888;
+    font-size: 14px;
+    margin-top: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.detail-desc {
+    line-height: 1.6;
+    color: #555;
+    margin-top: 15px;
+}
+
+/* Fiyat Alanı */
+.price-container {
+    margin: 25px 0;
+    display: flex;
+    align-items: center;
+}
+
+.current-price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #d81b60;
+}
+
+.discount-tag {
+    margin-left: 15px;
+    color: #27ae60;
+    font-weight: bold;
+    background-color: #e8f8f5;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+/* Stok Durumu */
+.stock-text {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.stock-available {
+    color: #27ae60; /* Yeşil */
+}
+
+.stock-empty {
+    color: #e74c3c; /* Kırmızı */
+}
+
+/* Buton Düzenlemesi */
+.detail-add-btn {
+    margin-top: 20px;
+    max-width: 200px;
+    /* add-btn sınıfı genel stilleri sağlar, burası sadece detay sayfası ayarları */
+}

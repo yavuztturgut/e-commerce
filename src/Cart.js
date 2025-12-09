@@ -2,7 +2,7 @@
 import React from 'react';
 import './Cart.css'; // CSS dosyasını dahil et
 
-function Cart({ cartItems, isOpen, toggleCart }) {
+function Cart({ cartItems, isOpen, toggleCart, removeFromCart }) {
     // Sepet toplam tutarı
     const totalPrice = cartItems.reduce((acc, item) => acc + item.price, 0);
 
@@ -32,6 +32,13 @@ function Cart({ cartItems, isOpen, toggleCart }) {
                                     <li key={index} className="cart-item">
                                         <span className="item-title">{item.title}</span>
                                         <span className="item-price">${item.price}</span>
+                                        <button
+                                            className="remove-btn"
+                                            onClick={() => removeFromCart(index)}
+                                            title="Sil"
+                                        >
+                                            ✕
+                                        </button>
                                     </li>
                                 ))}
                             </ul>

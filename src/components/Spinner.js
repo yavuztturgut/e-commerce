@@ -1,8 +1,8 @@
 // src/Spinner.js
 import React from 'react';
-import './Spinner.css';
+import '../css/Spinner.css';
 import Navbar from "./Navbar";
-import fakeNavbar from './fake-navbar.png';
+import fakeNavbar from '../assets/fake-navbar.png';
 const Spinner = ({ fullPage = false, text = "Yükleniyor..." }) => {
 
     // Eğer Tam Ekran (Full Page) isteniyorsa:

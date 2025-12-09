@@ -1,0 +1,101 @@
+/* src/HeroSlider.css */
+
+.hero-slider-area {
+    width: 100%;
+    height: 500px; /* Slider yüksekliği */
+    margin-bottom: 40px; /* Ürünlerle arasındaki boşluk */
+
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+    border-radius: 111px;
+}
+
+/* Her bir slide'ın yapısı */
+.slide-content {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover; /* Resmi kutuya sığdır */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Yazıyı sola yasla */
+}
+
+/* Yazının daha iyi okunması için koyu bir katman (Overlay) */
+.slide-overlay {
+    background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 80px; /* Soldan boşluk */
+}
+
+/* Yazı Kutusu */
+.slide-text-box {
+    color: white;
+    max-width: 500px;
+    animation: slideUp 1s ease-out; /* Yazı aşağıdan yukarı kaysın */
+}
+
+.slide-text-box h2 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    line-height: 1.2;
+}
+
+.slide-text-box p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    font-weight: 400;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Aksiyon Butonu */
+.slider-btn {
+    padding: 12px 35px;
+    font-size: 1rem;
+    background-color: #d81b60; /* Sitenin koyu pembe tonu */
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(216, 27, 96, 0.4);
+}
+
+.slider-btn:hover {
+    background-color: #ad1457;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(216, 27, 96, 0.6);
+}
+
+/* Swiper Noktaları (Pagination) Rengi */
+.swiper-pagination-bullet-active {
+    background-color: #d81b60 !important;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: white !important; /* Okların rengi */
+}
+
+/* Animasyon */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 768px) {
+    .hero-slider-area { height: 350px; }
+    .slide-overlay { padding-left: 20px; justify-content: center; text-align: center; background: rgba(0,0,0,0.4); }
+    .slide-text-box h2 { font-size: 2rem; }
+    .slide-text-box p { font-size: 1rem; }
+}

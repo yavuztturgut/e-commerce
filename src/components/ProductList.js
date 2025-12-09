@@ -1,6 +1,6 @@
 // src/ProductList.js
 import React from 'react';
-import './ProductList.css'; // CSS dosyasını dahil et
+import '../css/ProductList.css'; // CSS dosyasını dahil et
 import { useNavigate } from 'react-router-dom';
 
 function ProductList({ products, addToCart }) {

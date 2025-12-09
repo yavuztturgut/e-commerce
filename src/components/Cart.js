@@ -1,6 +1,6 @@
 // src/Cart.js
 import React from 'react';
-import './Cart.css'; // CSS dosyasını dahil et
+import '../css/Cart.css'; // CSS dosyasını dahil et
 
 function Cart({ cartItems, isOpen, toggleCart, removeFromCart }) {
     // Sepet toplam tutarı

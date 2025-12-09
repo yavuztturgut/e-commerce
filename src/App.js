@@ -1,10 +1,11 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ProductList from './ProductList';
-import Product from './Product';
-import Navbar from './Navbar'; // YENİ: Navbar'ı dahil ettik
-import './App.css';
+import ProductList from './components/ProductList';
+import Product from './components/Product';
+import Navbar from './components/Navbar'; // YENİ: Navbar'ı dahil ettik
+import './css/App.css';
+import HeroSlider from "./components/HeroSlider";
 
 // cerenaden.png ve Cart importlarını kaldırdık (Navbar'a taşıdık)
 
@@ -79,7 +80,12 @@ function App() {
                         <Routes>
                             <Route
                                 path="/"
-                                element={<ProductList products={products} addToCart={addToCart} />}
+                                element={
+                                <React.Fragment>
+                                    <HeroSlider />
+                                    <ProductList products={products} addToCart={addToCart} />
+                                </React.Fragment>
+                                }
                             />
                             <Route
                                 path="/product/:id"

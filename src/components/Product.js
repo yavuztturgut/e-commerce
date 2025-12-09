@@ -1,8 +1,8 @@
 // src/Product.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './ProductList.css'; // Genel buton stilleri (add-btn) buradan geliyor
-import './Product.css';     // Yeni oluşturduğumuz özel stiller
+import '../css/ProductList.css'; // Genel buton stilleri (add-btn) buradan geliyor
+import '../css/Product.css';     // Yeni oluşturduğumuz özel stiller
 import Spinner from "./Spinner";
 
 function Product({ addToCart }) {

@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+🌸 Ceren Aden Shop - E-Ticaret Uygulaması
+Ceren Aden Shop, React.js kullanılarak geliştirilmiş, modern, kullanıcı dostu ve dinamik bir kozmetik e-ticaret uygulamasıdır. Kullanıcıların makyaj ürünlerini inceleyebileceği, detaylı bilgi alabileceği ve sepetlerini yönetebileceği tam fonksiyonel bir arayüz sunar.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🚀 Proje Hakkında
+Bu proje, React ekosistemindeki temel ve ileri düzey konseptleri (Context API, React Router, Hooks) pratik bir e-ticaret senaryosu üzerinde uygulamak amacıyla geliştirilmiştir. Kullanıcı deneyimini ön planda tutan tasarımıyla, ürün listeleme, detay görüntüleme ve sepet yönetimi gibi temel e-ticaret işlevlerini barındırır.
 
-## Available Scripts
+✨ Öne Çıkan Özellikler
+Dinamik Ürün Listeleme: Makeup API entegrasyonu ile gerçek zamanlı kozmetik ürün verileri çekilir ve şık kartlar halinde listelenir.
 
-In the project directory, you can run:
+Akıllı Veri Yönetimi (LocalStorage): API isteklerini minimize etmek ve sayfa yüklenme hızını artırmak için çekilen veriler localStorage üzerinde önbelleğe alınır.
 
-### `npm start`
+Sepet Yönetimi: Kullanıcılar ürünleri sepete ekleyebilir, silebilir ve sepetin toplam tutarını anlık olarak görebilir. Sepet durumu sayfalar arası geçişte korunur.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Detaylı Ürün Sayfaları: Her ürün için özel oluşturulan detay sayfalarında ürün açıklaması, fiyat, kategori ve görsel detayları sunulur.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Modern UI/UX:
 
-### `npm test`
+Hero Slider: Swiper.js ile oluşturulmuş, dikkat çekici ve animasyonlu ana sayfa manşet alanı.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Sticky Header: Sayfa kaydırıldığında sabit kalan, erişilebilir navigasyon ve sepet alanı.
 
-### `npm run build`
+Loading State: Veriler yüklenirken kullanıcıyı bilgilendiren özel tasarım "Spinner" bileşeni.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Global State Yönetimi: Prop drilling sorununu çözmek için Context API kullanılarak sepet verisi tüm uygulama genelinde yönetilir.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+🛠️ Teknolojiler
+Bu proje aşağıdaki modern web teknolojileri kullanılarak inşa edilmiştir:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+React.js (v18): Bileşen tabanlı UI geliştirme.
 
-### `npm run eject`
+React Router DOM: Sayfalar arası dinamik yönlendirme (SPA).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+CSS3: Özelleştirilmiş stiller, Flexbox ve Grid yapıları, animasyonlar.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Swiper.js: Dokunmatik uyumlu modern slider yapısı.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Makeup API: Gerçek ürün verileri için kullanılan dış servis.

@@ -30,7 +30,7 @@ function Cart({ cartItems, isOpen, toggleCart, removeFromCart }) {
                             <ul className="cart-items-list">
                                 {cartItems.map((item, index) => (
                                     <li key={index} className="cart-item">
-                                        <span className="item-title">{item.title}</span>
+                                        <span className="item-title">{item.name}</span>
                                         <span className="item-price">${item.price}</span>
                                         <button
                                             className="remove-btn"

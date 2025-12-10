@@ -20,30 +20,24 @@ function ProductList({ products, addToCart }) {
                         {/* Resim Alanı */}
                         <div className="image-container">
                             <img
-                                src={product.thumbnail}
-                                alt={product.title}
+                                src={product.image_link}
+                                alt={product.name}
                                 className="product-image"
                             />
                         </div>
 
                         {/* İçerik Alanı */}
                         <div className="product-info">
-                            <h3 className="product-title">{product.title}</h3>
+                            <h3 className="product-title">{product.name}</h3>
                             <p className="product-price">${product.price}</p>
-
-                            <p className={`stock-status ${product.stock > 0 ? 'in-stock' : 'out-of-stock'}`}>
-                                {product.stock > 0 ? `Stok: ${product.stock}` : "Tükendi"}
-                            </p>
-
                             <button
                                 className="add-btn"
                                 onClick={(e) => {
                                     e.stopPropagation(); // ÖNEMLİ: Tıklamanın karta geçmesini engeller
                                     addToCart(product);
                                 }}
-                                disabled={product.stock === 0}
                             >
-                                {product.stock > 0 ? 'Sepete Ekle' : 'Stok Yok'}
+                                {'Sepete Ekle'}
                             </button>
                         </div>
                     </div>

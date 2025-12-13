@@ -2,8 +2,9 @@
 import React, { useState } from 'react'; // useState buraya alındı
 import '../css/ProductList.css';
 import { useNavigate } from 'react-router-dom';
+import Cart from "./Cart";
 
-function ProductList({ products, addToCart }) {
+function ProductList({ products, addToCart, searchTerm, setSearchTerm  }) {
     const navigate = useNavigate();
 
     // --- FİLTRELEME MANTIĞI ---
@@ -14,13 +15,28 @@ function ProductList({ products, addToCart }) {
     const categories = ["Tümü", ...new Set(products.map(p => p.product_type))];
 
     // 2. Seçili kategoriye göre ürünleri süz
-    const filteredProducts = selectedCategory === "Tümü"
-        ? products
-        : products.filter(item => item.product_type === selectedCategory);
+    const filteredProducts = products.filter(product => {
+        // 1. Kategori Kriteri
+        const categoryMatch = selectedCategory === "Tümü"
+            ? true
+            : product.product_type === selectedCategory;
+    const searchMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
 
+    // İkisi de uyuyorsa göster
+    return categoryMatch && searchMatch;
+    });
     return (
         <div className="product-container">
-
+            <div className="search-box">
+                <input
+                    type="text"
+                    placeholder="Ürün ara... (Örn: Lipstick)"
+                    value={searchTerm}
+                    // Yazılan her harfte App.js'deki state'i güncelliyoruz
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <span className="search-icon">🔍</span>
+            </div>
             {/* --- YENİ: FİLTRELEME BUTONLARI --- */}
             <div className="category-filter-bar">
                 {categories.map((cat, index) => (

@@ -12,6 +12,7 @@ function App() {
     const [cart, setCart] = useState([]);
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
     // Veriyi API'den çek (Makeup API)
     useEffect(() => {
         // 1. ADIM: Önce LocalStorage'da veri var mı diye kontrol et
@@ -97,7 +98,7 @@ function App() {
                                 element={
                                     <React.Fragment>
                                         <HeroSlider />
-                                        <ProductList products={products} addToCart={addToCart} />
+                                        <ProductList products={products} addToCart={addToCart} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
                                     </React.Fragment>
                                 }
                             />

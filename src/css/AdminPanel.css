@@ -1,0 +1,106 @@
+/* src/css/AdminPanel.css */
+
+.admin-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fce4ec; /* Açık pembe arka plan */
+    min-height: 100vh;
+}
+
+.admin-title {
+    text-align: center;
+    color: #d81b60;
+    margin-bottom: 30px;
+}
+
+.admin-content {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* Mobilde alt alta olsun, masaüstünde yan yana */
+@media (max-width: 768px) {
+    .admin-content {
+        flex-direction: column;
+    }
+}
+
+.admin-section {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    flex: 1; /* Eşit genişlik */
+}
+
+/* Form Stilleri (Öncekiyle benzer ama sıkıştırılmış) */
+.form-section input, .form-section select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+.form-section .row {
+    display: flex;
+    gap: 10px;
+}
+
+.save-btn {
+    width: 100%;
+    background: #27ae60; /* Yeşil (Ekleme için) */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Tablo Stilleri */
+.list-section {
+    max-height: 500px; /* Çok uzarsa scroll çıksın */
+    overflow-y: auto;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-table th {
+    text-align: left;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    color: #888;
+}
+
+.product-table td {
+    padding: 10px 0;
+    border-bottom: 1px solid #f9f9f9;
+    font-size: 0.9rem;
+}
+
+.table-thumb {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.delete-btn {
+    background-color: #e74c3c; /* Kırmızı */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}

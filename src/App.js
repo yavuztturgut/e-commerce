@@ -6,6 +6,11 @@ import Product from './components/Product';
 import Navbar from './components/Navbar';
 import './css/App.css';
 import HeroSlider from "./components/HeroSlider";
+import AddProduct from './components/AddProduct';
+import AdminPanel from "./components/AdminPanel";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {notify} from "./components/Notify";
 
 function App() {
     const [products, setProducts] = useState([]);
@@ -47,6 +52,7 @@ function App() {
                 });
         }
     }, []);
+
     const addToCart = (productToAdd) => {
 
         const updatedProducts = products.map(product => {
@@ -56,10 +62,41 @@ function App() {
             }
             return product;
         });
-
+        notify.success(`Ürün sepetinize eklendi!`);
         setProducts(updatedProducts);
         setCart([...cart, productToAdd]);
         setIsCartOpen(true);
+
+    };
+
+    const addNewProduct = (newProduct) => {
+        // 1. Yeni ürüne benzersiz bir ID verelim (şimdiki zamanı kullanmak pratiktir)
+        const productWithId = { ...newProduct, id: Date.now() };
+
+        // 2. Mevcut listeye ekle
+        const updatedList = [productWithId, ...products]; // En başa ekler
+
+        // 3. State'i güncelle (Ekranda görünsün)
+        setProducts(updatedList);
+
+        // 4. LocalStorage'ı güncelle (Sayfa yenilenince gitmesin)
+        localStorage.setItem('cerenAdenProducts', JSON.stringify(updatedList));
+
+        notify.success(`Ürün başarıyla eklendi!`)
+    };
+
+    const deleteProduct = (idToDelete) => {
+        // 1. Silinmek istenen hariç diğerlerini filtrele
+        const updatedProducts = products.filter(product => product.id !== idToDelete);
+
+        // 2. State'i güncelle
+        setProducts(updatedProducts);
+
+        // 3. LocalStorage'ı güncelle (Kalıcı olması için)
+        localStorage.setItem('cerenAdenProducts', JSON.stringify(updatedProducts));
+
+        // Opsiyonel: Bildirim göster
+        // alert("Ürün silindi.");
     };
 
     const toggleCart = () => {
@@ -106,10 +143,34 @@ function App() {
                                 path="/product/:id"
                                 element={<Product addToCart={addToCart} />}
                             />
+                            <Route
+                                path="/admin"
+                                element={
+                                    <AdminPanel
+                                        products={products}          // Listeyi görmek için
+                                        onAddProduct={addNewProduct} // Eklemek için
+                                        onDeleteProduct={deleteProduct} // Silmek için
+                                    />
+                                }
+                            />
                         </Routes>
                     )}
                 </main>
             </div>
+
+            <ToastContainer
+                position="top-left"
+                autoClose={2000} // 3 saniye sonra kapansın
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                limit={4}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </Router>
     );
 }

@@ -103,3 +103,28 @@ body {
     /* Tıklanabilirlik sorununu çözmek için (eğer arkadaki linklere engel olursa) */
     pointer-events: none;
 }
+
+/* --- TOASTIFY ÖZELLEŞTİRME --- */
+
+/* Başarılı (Pembe) Bildirim Kutusu */
+.pembe-toast {
+    background-color: #fff0f5 !important; /* Çok açık pembe zemin */
+    color: #d81b60 !important; /* Koyu pembe yazı */
+    border-left: 5px solid #d81b60; /* Solda şık bir çizgi */
+    font-weight: 600;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 15px rgba(216, 27, 96, 0.2) !important;
+}
+
+/* Süre çubuğunun rengi */
+.pembe-progress {
+    background: #d81b60 !important;
+}
+
+/* Hata Bildirim Kutusu */
+.hata-toast {
+    background-color: #ffebee !important;
+    color: #c62828 !important;
+    border-left: 5px solid #c62828;
+    font-weight: 600;
+}

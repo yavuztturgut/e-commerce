@@ -1,43 +1,90 @@
 // src/ProductList.js
-import React, { useState } from 'react'; // useState buraya alındı
+import React, { useState } from 'react';
 import '../css/ProductList.css';
 import { useNavigate } from 'react-router-dom';
-import Cart from "./Cart";
 
-function ProductList({ products, addToCart, searchTerm, setSearchTerm  }) {
+function ProductList({ products, addToCart, searchTerm, setSearchTerm }) {
     const navigate = useNavigate();
 
-    // --- FİLTRELEME MANTIĞI ---
+    // --- STATE TANIMLARI ---
     const [selectedCategory, setSelectedCategory] = useState("Tümü");
+    const [sortType, setSortType] = useState("default"); // YENİ: Sıralama durumu
 
-    // 1. Ürünlerden benzersiz kategorileri çıkar
-    // Set kullanarak aynı kategorilerin tekrar etmesini engelliyoruz
+    // 1. Kategorileri Çıkar
     const categories = ["Tümü", ...new Set(products.map(p => p.product_type))];
 
-    // 2. Seçili kategoriye göre ürünleri süz
+    // 2. FİLTRELEME (Kategori + Arama)
     const filteredProducts = products.filter(product => {
-        // 1. Kategori Kriteri
+        // A. Kategoriye göre
         const categoryMatch = selectedCategory === "Tümü"
             ? true
             : product.product_type === selectedCategory;
-    const searchMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
 
-    // İkisi de uyuyorsa göster
-    return categoryMatch && searchMatch;
+        // B. Arama kelimesine göre
+        const term = searchTerm || "";
+        const productName = product.name || "";
+        const searchMatch = productName.toLowerCase().includes(term.toLowerCase());
+
+        return categoryMatch && searchMatch;
     });
+
+    // 3. SIRALAMA (Filtrelenmiş listeyi sırala)
+    // [...filteredProducts] diyerek orijinal diziyi bozmadan kopyasını alıyoruz
+    const sortedProducts = [...filteredProducts].sort((a, b) => {
+        // Fiyatları sayıya çevirerek karşılaştır (Güvenlik önlemi)
+        const priceA = Number(a.price) || 0;
+        const priceB = Number(b.price) || 0;
+        const nameA = a.name ? a.name.toLowerCase() : "";
+        const nameB = b.name ? b.name.toLowerCase() : "";
+
+        if (sortType === 'price-asc') {
+            return priceA - priceB; // Fiyat Artan
+        }
+        if (sortType === 'price-desc') {
+            return priceB - priceA; // Fiyat Azalan
+        }
+        if (sortType === 'name-asc') {
+            return nameA.localeCompare(nameB); // A-Z
+        }
+        if (sortType === 'name-desc') {
+            return nameB.localeCompare(nameA); // Z-A
+        }
+        return 0; // Varsayılan
+    });
+
     return (
         <div className="product-container">
-            <div className="search-box">
-                <input
-                    type="text"
-                    placeholder="Ürün ara... (Örn: Lipstick)"
-                    value={searchTerm}
-                    // Yazılan her harfte App.js'deki state'i güncelliyoruz
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <span className="search-icon">🔍</span>
+            <div>
+            {/* --- ÜST PANEL: ARAMA ve SIRALAMA --- */}
+            <div className="controls-header">
+                {/* Arama Kutusu */}
+                <div className="search-wrapper">
+                    <input
+                        type="text"
+                        placeholder="Ürün ara... (Örn: Ruj)"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <span className="search-icon">🔍</span>
+                </div>
+
+                {/* YENİ: Sıralama Kutusu */}
+                <div className="sort-wrapper">
+                    <select
+                        value={sortType}
+                        onChange={(e) => setSortType(e.target.value)}
+                        className="sort-select"
+                    >
+                        <option value="default">Sıralama Seçiniz</option>
+                        <option value="price-asc">Fiyat: Artan (Ucuz ➝ Pahalı)</option>
+                        <option value="price-desc">Fiyat: Azalan (Pahalı ➝ Ucuz)</option>
+                        <option value="name-asc">İsim: A'dan Z'ye</option>
+                        <option value="name-desc">İsim: Z'den A'ya</option>
+                    </select>
+                </div>
             </div>
-            {/* --- YENİ: FİLTRELEME BUTONLARI --- */}
+
+            {/* --- KATEGORİ BUTONLARI --- */}
             <div className="category-filter-bar">
                 {categories.map((cat, index) => (
                     <button
@@ -45,21 +92,18 @@ function ProductList({ products, addToCart, searchTerm, setSearchTerm  }) {
                         className={`filter-btn ${selectedCategory === cat ? 'active' : ''}`}
                         onClick={() => setSelectedCategory(cat)}
                     >
-                        {/* Alt tireleri boşlukla değiştirip baş harfleri büyütelim */}
                         {cat === "Tümü" ? cat : cat.replace('_', ' ')}
                     </button>
                 ))}
             </div>
-
-            {/* --- ÜRÜN LİSTESİ --- */}
+        </div>
+            {/* --- ÜRÜN LİSTESİ (Sıralanmış listeyi kullanıyoruz) --- */}
             <div className="product-grid">
-                {/* DİKKAT: Artık 'products' değil 'filteredProducts' dönüyoruz */}
-                {filteredProducts.map((product) => (
+                {sortedProducts.map((product) => (
                     <div
                         key={product.id}
                         className="product-card"
                         onClick={() => navigate(`/product/${product.id}`)}
-                        style={{ cursor: 'pointer' }}
                     >
                         <div className="image-container">
                             <img
@@ -73,7 +117,7 @@ function ProductList({ products, addToCart, searchTerm, setSearchTerm  }) {
                         <div className="product-info">
                             <h3 className="product-title">{product.name}</h3>
                             <p className="product-price">
-                                {product.price_sign}{product.price}
+                                {product.price_sign}{Number(product.price).toFixed(2)}
                             </p>
 
                             <button
@@ -90,10 +134,11 @@ function ProductList({ products, addToCart, searchTerm, setSearchTerm  }) {
                 ))}
             </div>
 
-            {/* Eğer filtre sonucunda ürün kalmadıysa mesaj göster */}
-            {filteredProducts.length === 0 && (
-                <div style={{ textAlign: 'center', padding: '50px', color: '#999' }}>
-                    Bu kategoride ürün bulunamadı. 🌸
+            {/* --- SONUÇ YOK MESAJI --- */}
+            {sortedProducts.length === 0 && (
+                <div className="no-result">
+                    <h3>Sonuç Bulunamadı 😔</h3>
+                    <p>Farklı bir arama terimi veya kategori deneyebilirsiniz.</p>
                 </div>
             )}
         </div>

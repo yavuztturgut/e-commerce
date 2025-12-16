@@ -173,6 +173,15 @@
 
 /* src/css/ProductList.css */
 
+.product-container{
+    background-color: #fff0f5;
+    padding: 12px;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
 /* --- FİLTRE ÇUBUĞU --- */
 .category-filter-bar {
     display: flex;
@@ -267,5 +276,117 @@
         width: 100%;
         margin-top: 10px;
         max-width: 100%;
+    }
+}
+
+/* --- KONTROL PANELİ (ARAMA + SIRALAMA) --- */
+/* Bu kısmı .category-filter-bar'dan önce veya dosyanın uygun bir yerine ekle */
+
+.controls-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Mobilde sığmazsa alt satıra geçsin */
+    gap: 250px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+/* Arama Kutusu Sarmalayıcısı */
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin-left: 50px;
+}
+
+.search-wrapper input {
+    width: 100%;
+    padding: 12px 45px 12px 20px; /* İkon için sağdan boşluk bıraktık */
+    border: 2px solid #ffc1e3; /* Senin açık pembe rengin */
+    border-radius: 50px; /* Tam oval */
+    outline: none;
+    font-size: 1rem;
+    color: #555;
+    background-color: #fff0f5; /* Çok açık pembe zemin */
+    transition: all 0.3s ease;
+}
+
+.search-wrapper input:focus {
+    background-color: white;
+    border-color: #d81b60; /* Odaklanınca koyu pembe */
+    box-shadow: 0 0 10px rgba(216, 27, 96, 0.15);
+}
+
+.search-wrapper .search-icon {
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #d81b60;
+    pointer-events: none;
+}
+
+/* Sıralama Kutusu (Select) Sarmalayıcısı */
+.sort-wrapper {
+    width: 100%;
+    max-width: 250px;
+}
+
+.sort-select {
+    width: 100%;
+    margin-left: 250px;
+    padding: 12px 20px;
+    border: 2px solid #ffc1e3;
+    border-radius: 50px;
+    background-color: white; /* Select içi beyaz olsun */
+    color: #555;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    appearance: none; /* Varsayılan tarayıcı okunu gizle */
+
+    /* Özel Pembe Ok İşareti (SVG) */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d81b60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.sort-select:hover {
+    background-color: #fff0f5; /* Hover'da hafif pembeleşsin */
+}
+
+.sort-select:focus {
+    border-color: #d81b60;
+    box-shadow: 0 0 10px rgba(216, 27, 96, 0.15);
+}
+
+/* --- SONUÇ YOK MESAJI --- */
+.no-result {
+    text-align: center;
+    padding: 60px  0 60px 0 ;
+    color: #888;
+    width: 100%;
+    grid-column: 1 / -1; /* Grid içinde tüm satırı kaplasın */
+}
+
+.no-result h3 {
+    color: #d81b60;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+/* --- MOBİL UYUM --- */
+@media (max-width: 768px) {
+    .controls-header {
+        flex-direction: column; /* Alt alta dizilsin */
+        align-items: stretch; /* Genişliği doldursun */
+    }
+
+    .search-wrapper, .sort-wrapper {
+        max-width: 100%; /* Mobilde tam genişlik */
     }
 }

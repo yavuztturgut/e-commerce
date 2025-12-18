@@ -1,0 +1,21 @@
+/* Navbar.css veya App.css */
+
+.app-header Button {
+    margin-left: 510px; /* Senin mevcut konumlandırman */
+    border-radius: 200px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+    padding: 8px 16px; /* Butonun içine biraz boşluk */
+    font-size: 1.2rem; /* İkonu (Ay/Güneş) biraz büyütelim */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.app-header Button:hover {
+    /* Üzerine gelince senin ana pembe rengin olsun */
+    background-color: var(--text-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: scale(1.02);
+}

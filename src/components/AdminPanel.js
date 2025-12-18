@@ -7,7 +7,6 @@ import { useContext } from 'react';
 import { ShopContext } from '../context/ShopContext';
 
 function AdminPanel() {
-
     const navigate = useNavigate();
     const { products, addNewProduct, deleteProduct } = useContext(ShopContext);
     const [formData, setFormData] = useState({

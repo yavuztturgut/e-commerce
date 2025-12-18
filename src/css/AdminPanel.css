@@ -4,14 +4,19 @@
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    background-color: #fce4ec; /* Açık pembe arka plan */
+
+    /* Sabit pembe yerine ikincil zemin rengi */
+    background-color: var(--bg-secondary);
     min-height: 100vh;
+    transition: background-color 0.3s ease;
 }
 
 .admin-title {
     text-align: center;
-    color: #d81b60;
+    /* Başlık ana pembe renk */
+    color: var(--primary-color);
     margin-bottom: 30px;
+    font-size: 2rem;
 }
 
 .admin-content {
@@ -28,21 +33,47 @@
 }
 
 .admin-section {
-    background: white;
+    /* Kart arka planı (Dark: Koyu Gri, Light: Beyaz) */
+    background: var(--card-bg);
+
     padding: 25px;
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+
+    /* Gölge ve kenarlık değişkenleri */
+    box-shadow: 0 5px 15px var(--shadow-color);
+    border: 1px solid var(--border-color);
+
     flex: 1; /* Eşit genişlik */
+    transition: background-color 0.1s ease;
 }
 
-/* Form Stilleri (Öncekiyle benzer ama sıkıştırılmış) */
+/* Başlıklar (h2) */
+.admin-section h2 {
+    color: var(--text-color);
+    margin-top: 0;
+}
+
+/* Form Stilleri */
 .form-section input, .form-section select {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ddd;
+
+    /* Input renkleri dark mode uyumlu */
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+
     border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease;
 }
+
+.form-section input:focus, .form-section select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px var(--shadow-color);
+}
+
 .form-section .row {
     display: flex;
     gap: 10px;
@@ -50,18 +81,23 @@
 
 .save-btn {
     width: 100%;
-    background: #27ae60; /* Yeşil (Ekleme için) */
+    background: #27ae60; /* Yeşil (Save işlemi için sabit kalabilir) */
     color: white;
     border: none;
     padding: 12px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.save-btn:hover {
+    background-color: #219150;
 }
 
 /* Tablo Stilleri */
 .list-section {
-    max-height: 500px; /* Çok uzarsa scroll çıksın */
+    max-height: 500px;
     overflow-y: auto;
 }
 
@@ -72,14 +108,20 @@
 
 .product-table th {
     text-align: left;
-    border-bottom: 2px solid #eee;
+
+    /* Tablo başlıkları */
+    border-bottom: 2px solid var(--border-color);
     padding-bottom: 10px;
-    color: #888;
+    color: var(--text-muted);
 }
 
 .product-table td {
     padding: 10px 0;
-    border-bottom: 1px solid #f9f9f9;
+
+    /* Satır çizgisi ve yazı rengi */
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+
     font-size: 0.9rem;
 }
 
@@ -88,19 +130,38 @@
     height: 40px;
     object-fit: cover;
     border-radius: 5px;
+    background-color: var(--input-bg); /* Resim yüklenmezse zemin rengi */
 }
 
 .delete-btn {
-    background-color: #e74c3c; /* Kırmızı */
+    background-color: #e74c3c; /* Kırmızı (Silme işlemi için sabit) */
     color: white;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 0.8rem;
-    transition: background 0.2s;
+    transition: opacity 0.2s;
 }
 
 .delete-btn:hover {
-    background-color: #c0392b;
+    opacity: 0.8;
+}
+
+/* --- Scrollbar Tasarımı (Dark Mode Uyumlu) --- */
+.list-section::-webkit-scrollbar {
+    width: 6px;
+}
+
+.list-section::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+.list-section::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.list-section::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
 }

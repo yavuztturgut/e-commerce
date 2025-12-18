@@ -1,7 +1,6 @@
-/* src/ProductList.css */
+/* src/css/ProductList.css */
 
 /* --- Animasyon Tanımları --- */
-/* Kartların aşağıdan yukarı süzülerek gelmesi için */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -17,43 +16,39 @@
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 12px; /* Boşluğu biraz artırdık, ferahlasın */
+    gap: 12px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 /* Ürün Kartı */
 .product-card {
-    background: #ffffff;
-    border: 1px solid rgba(0,0,0,0.05); /* Çizgiyi çok silik yaptık */
-    border-radius: 16px; /* Köşeleri daha çok yuvarladık */
+    /* Arka plan ve kenarlık değişkene bağlandı */
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
     overflow: hidden;
     position: relative;
     display: flex;
     flex-direction: column;
-
-    /* Standart 'ease' yerine daha doğal 'cubic-bezier' kullandık */
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-    /* Hafif bir gölge ile başla */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-
-    /* Sayfa açılış animasyonu */
+    /* Gölge değişkene bağlandı */
+    box-shadow: 0 4px 6px var(--shadow-color);
     animation: fadeInUp 0.6s ease-out forwards;
 }
 
-/* Karta Mouse ile Gelince */
 .product-card:hover {
-    transform: translateY(-8px); /* Daha belirgin yukarı çıkış */
-    /* Derinlik hissi veren katmanlı gölge */
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
-    border-color: transparent;
+    transform: translateY(-8px);
+    box-shadow: 0 20px 30px var(--shadow-color);
+    /* Hover'da kenarlığı temanın ana rengi yapabiliriz */
+    border-color: var(--primary-color);
 }
 
 /* Resim Alanı */
 .image-container {
     height: 200px;
-    background-color: #fff; /* Gri yerine beyaz, ürün öne çıksın */
+    /* Kart ile aynı renk olsun */
+    background-color: var(--card-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,13 +56,14 @@
     position: relative;
 }
 
-/* Resmin arkasına hafif bir dekoratif daire (Opsiyonel ama şık durur) */
+/* Resmin arkasındaki dekoratif daire */
 .image-container::before {
     content: '';
     position: absolute;
     width: 150px;
     height: 150px;
-    background: radial-gradient(circle, #ffebf2 0%, transparent 70%);
+    /* Işık efekti için ikincil renk */
+    background: radial-gradient(circle, var(--bg-secondary) 0%, transparent 70%);
     border-radius: 50%;
     z-index: 1;
     opacity: 0;
@@ -75,7 +71,7 @@
 }
 
 .product-card:hover .image-container::before {
-    opacity: 1; /* Hover'da arkada pembe bir ışık belirir */
+    opacity: 1;
 }
 
 .product-image {
@@ -83,34 +79,33 @@
     height: 100%;
     object-fit: contain;
     padding: 20px;
-    z-index: 2; /* Işığın önünde dursun */
+    z-index: 2;
     transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    /* Resim kalitesini artırır */
     filter: drop-shadow(0 5px 10px rgba(0,0,0,0.05));
 }
 
-/* Resme zoom efekti */
 .product-card:hover .product-image {
-    transform: scale(1.08); /* Biraz daha fazla büyüme */
+    transform: scale(1.08);
 }
 
 /* Bilgi Alanı */
 .product-info {
-    padding: 20px 24px 24px; /* Alt boşluğu artırdık */
+    padding: 20px 24px 24px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    background: #fff;
+    /* Kart rengiyle uyumlu */
+    background: var(--card-bg);
 }
 
 .product-title {
     font-size: 1.05rem;
     font-weight: 600;
-    color: #2d3436;
+    /* Ana yazı rengi */
+    color: var(--text-color);
     margin: 0 0 8px 0;
     line-height: 1.4;
-    height: 2.8em; /* 2 satır yüksekliği sabitleme */
-
+    height: 2.8em;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -120,30 +115,27 @@
 .product-price {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #d81b60; /* Marka rengi pembe */
+    /* Fiyat her zaman ana pembe renk */
+    color: var(--primary-color);
     margin-bottom: 15px;
     letter-spacing: -0.5px;
 }
 
-/* Buton - En büyük değişim burada */
+/* Buton */
 .add-btn {
-    /* Düz renk yerine modern gradient */
+    /* Gradyan buton olduğu gibi kalabilir, pembe her modda şık durur */
     background: linear-gradient(135deg, #ff80ab 0%, #d81b60 100%);
     color: white;
     border: none;
     padding: 14px;
-    border-radius: 12px; /* Daha yuvarlak */
+    border-radius: 12px;
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
     width: 100%;
     margin-top: auto;
-
-    /* Gölge ve geçiş */
     box-shadow: 0 4px 15px rgba(216, 27, 96, 0.3);
     transition: all 0.3s ease;
-
-    /* Buton içindeki yazı ile ikon hizalaması için */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -151,142 +143,74 @@
 }
 
 .add-btn:hover {
-    /* Hover'da gradient yönü değişiyor hissi */
     background: linear-gradient(135deg, #ff4081 0%, #c2185b 100%);
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(216, 27, 96, 0.4);
 }
 
-/* Tıklama Efekti (Tactile Feedback) */
 .add-btn:active {
-    transform: scale(0.96); /* Tıklayınca küçülür */
+    transform: scale(0.96);
     box-shadow: 0 2px 10px rgba(216, 27, 96, 0.2);
 }
 
-.add-btn:disabled {
-    background: #e0e0e0;
-    color: #999;
-    box-shadow: none;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* src/css/ProductList.css */
-
-.product-container{
-    background-color: #fff0f5;
+/* Ana Konteyner (Filtre ve Listeyi kapsayan) */
+.product-container {
+    /* Açık pembe veya koyu gri zemin */
+    background-color: var(--bg-secondary);
     padding: 12px;
     border-top-left-radius: 100px;
     border-top-right-radius: 100px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    transition: background-color 0.3s ease;
 }
 
 /* --- FİLTRE ÇUBUĞU --- */
 .category-filter-bar {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap; /* Sığmazsa alt satıra geçsin */
+    flex-wrap: wrap;
     gap: 12px;
-    margin-bottom: 30px; /* Ürünlerle arasına boşluk */
+    margin-bottom: 30px;
     padding: 0 20px;
 }
 
 .filter-btn {
-    background-color: white;
-    border: 2px solid #ffc1e3; /* Açık pembe */
-    color: #d81b60; /* Koyu pembe yazı */
+    /* Buton içi renk */
+    background-color: var(--card-bg);
+    border: 2px solid var(--border-color);
+    color: var(--primary-color);
     padding: 8px 20px;
-    border-radius: 50px; /* Hap şeklinde */
+    border-radius: 50px;
     font-weight: 600;
     cursor: pointer;
-    text-transform: capitalize; /* İlk harfleri büyük yap */
+    text-transform: capitalize;
     transition: all 0.3s ease;
     font-size: 0.8rem;
 }
 
 .filter-btn:hover {
-    background-color: #fff0f5;
+    background-color: var(--bg-secondary);
     transform: translateY(-2px);
 }
 
 /* Seçili Olan Buton */
 .filter-btn.active {
-    background-color: #d81b60;
+    /* Aktif olunca ana renk */
+    background-color: var(--primary-color);
     color: white;
-    border-color: #d81b60;
-    box-shadow: 0 4px 10px rgba(216, 27, 96, 0.3);
-}
-
-/* Mobilde yatay kaydırma (Opsiyonel) */
-@media (max-width: 768px) {
-    .category-filter-bar {
-        justify-content: flex-start;
-        overflow-x: auto;
-        padding-bottom: 10px;
-        white-space: nowrap;
-        flex-wrap: nowrap;
-    }
-}
-
-/* ... Mevcut grid ve card CSS kodların burada devam ediyor ... */
-
-/* Navbar Ortası: Arama Kutusu */
-.search-box {
-    position: relative;
-    float: right;
-    margin-right: 100px;
-    margin-top: 15px; /* Askimin kodu*/
-    width: 40%; /* Navbar'ın ortasında yer kaplasın */
-    max-width: 400px;
-}
-
-.search-box input {
-    width: 100%;
-    padding: 10px 40px 10px 20px; /* Sağa ikon için boşluk */
-    border: 2px solid #ffc1e3; /* Açık pembe */
-    border-radius: 50px; /* Tam oval */
-    outline: none;
-    font-size: 0.95rem;
-    color: #555;
-    background-color: #fff0f5; /* Çok açık pembe zemin */
-    transition: all 0.3s ease;
-}
-
-.search-box input:focus {
-    background-color: white;
-    border-color: #d81b60; /* Odaklanınca koyu pembe */
-    box-shadow: 0 0 10px rgba(216, 27, 96, 0.2);
-}
-
-.search-box .search-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.1rem;
-    color: #d81b60;
-    pointer-events: none; /* İkona tıklanmasın */
-}
-
-/* Mobilde arama kutusu */
-@media (max-width: 768px) {
-    .search-box {
-        order: 3; /* Logodan ve sepetten sonra gelsin */
-        width: 100%;
-        margin-top: 10px;
-        max-width: 100%;
-    }
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 10px var(--shadow-color);
 }
 
 /* --- KONTROL PANELİ (ARAMA + SIRALAMA) --- */
-/* Bu kısmı .category-filter-bar'dan önce veya dosyanın uygun bir yerine ekle */
-
 .controls-header {
     display: flex;
     align-items: center;
-    flex-wrap: wrap; /* Mobilde sığmazsa alt satıra geçsin */
-    gap: 250px;
+    flex-wrap: wrap;
+    /* Mobilde sıkışmaması için gap'i biraz düşürdüm, istersen 250px tutabilirsin */
+    gap: 500px;
+    justify-content: center; /* Ortala */
     margin-bottom: 30px;
     margin-top: 20px;
 }
@@ -296,34 +220,37 @@
     position: relative;
     width: 100%;
     max-width: 300px;
-    margin-left: 50px;
+    /* margin-left: 50px;  <-- Flex justify-content ile hizalamak daha sağlıklı */
 }
 
 .search-wrapper input {
     width: 100%;
-    padding: 12px 45px 12px 20px; /* İkon için sağdan boşluk bıraktık */
-    border: 2px solid #ffc1e3; /* Senin açık pembe rengin */
-    border-radius: 50px; /* Tam oval */
+    padding: 12px 45px 12px 20px;
+
+    /* Değişken kullanımı */
+    border: 2px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+
+    border-radius: 50px;
     outline: none;
     font-size: 1rem;
-    color: #555;
-    background-color: #fff0f5; /* Çok açık pembe zemin */
     transition: all 0.3s ease;
 }
 
 .search-wrapper input:focus {
-    background-color: white;
-    border-color: #d81b60; /* Odaklanınca koyu pembe */
-    box-shadow: 0 0 10px rgba(216, 27, 96, 0.15);
+    background-color: var(--card-bg);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--shadow-color);
 }
 
 .search-wrapper .search-icon {
     position: absolute;
-    right: -50px;
+    right: 15px; /* Kutu dışına taşmaması için düzelttim */
     top: 50%;
     transform: translateY(-50%);
     font-size: 1.2rem;
-    color: #d81b60;
+    color: var(--primary-color);
     pointer-events: none;
 }
 
@@ -335,19 +262,21 @@
 
 .sort-select {
     width: 100%;
-    margin-left: 250px;
     padding: 12px 20px;
-    border: 2px solid #ffc1e3;
+
+    /* Değişken kullanımı */
+    border: 2px solid var(--border-color);
+    background-color: var(--input-bg); /* Kart rengi değil input rengi daha iyi */
+    color: var(--text-color);
+
     border-radius: 50px;
-    background-color: white; /* Select içi beyaz olsun */
-    color: #555;
     font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;
     outline: none;
-    appearance: none; /* Varsayılan tarayıcı okunu gizle */
+    appearance: none;
 
-    /* Özel Pembe Ok İşareti (SVG) */
+    /* SVG ikonu pembe kalabilir, dark modda da şık durur */
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d81b60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 15px center;
@@ -356,25 +285,26 @@
 }
 
 .sort-select:hover {
-    background-color: #fff0f5; /* Hover'da hafif pembeleşsin */
+    background-color: var(--bg-secondary);
 }
 
 .sort-select:focus {
-    border-color: #d81b60;
-    box-shadow: 0 0 10px rgba(216, 27, 96, 0.15);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--shadow-color);
+    background-color: var(--card-bg);
 }
 
 /* --- SONUÇ YOK MESAJI --- */
 .no-result {
     text-align: center;
-    padding: 60px  0 60px 0 ;
-    color: #888;
+    padding: 60px 0;
+    color: var(--text-muted); /* Değişken */
     width: 100%;
-    grid-column: 1 / -1; /* Grid içinde tüm satırı kaplasın */
+    grid-column: 1 / -1;
 }
 
 .no-result h3 {
-    color: #d81b60;
+    color: var(--primary-color);
     margin-bottom: 10px;
     font-size: 1.5rem;
 }
@@ -382,11 +312,20 @@
 /* --- MOBİL UYUM --- */
 @media (max-width: 768px) {
     .controls-header {
-        flex-direction: column; /* Alt alta dizilsin */
-        align-items: stretch; /* Genişliği doldursun */
+        flex-direction: column;
+        gap: 20px;
     }
 
     .search-wrapper, .sort-wrapper {
-        max-width: 100%; /* Mobilde tam genişlik */
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .category-filter-bar {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        white-space: nowrap;
+        flex-wrap: nowrap;
     }
 }

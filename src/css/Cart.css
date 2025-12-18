@@ -1,7 +1,6 @@
+/* src/css/Cart.css */
 
 /* Ana Konteyner: Sağ üste sabitler */
-
-
 .cart-container {
     position: fixed;
     top: 15px;
@@ -9,62 +8,74 @@
     z-index: 1000;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-    /* --- EKLENEN KISIMLAR --- */
-    display: flex;           /* İçerik dizilimi için flex kullan */
-    flex-direction: column;  /* Buton ve kutu alt alta olsun */
-    align-items: flex-end;   /* Her şeyi SAĞA yasla */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 /* Sepet Butonu */
 .cart-toggle-btn {
-    background-color: #ffa9d9; /* Canlı bir mercan rengi */
-    color: white;
+    /* Sabit renk yerine Ana Tema Rengi */
+    background-color: var(--primary-color);
+    color: white; /* İkon/Yazı rengi beyaz kalabilir veya var(--bg-color) olabilir */
+
     border: none;
     padding: 12px 24px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    border-radius: 50px; /* Hap şeklinde buton */
+    border-radius: 50px;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 10px;
+
+    /* Gölgeyi temaya uygun hale getirdik */
+    box-shadow: 0 4px 15px var(--shadow-color);
 }
 
 .cart-toggle-btn:active {
-    background-color: white;
+    transform: scale(0.95);
 }
 
 .cart-toggle-btn:hover {
-    background-color: #ff99d2;
+    /* Hover durumunda rengi biraz açmak/koyultmak yerine opacity ile oynuyoruz */
+    opacity: 0.9;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px #ff99d2;
+    box-shadow: 0 6px 20px var(--shadow-color);
 }
 
 /* Sepet Sayısı (Badge) */
 .cart-count-badge {
-    background-color: #ffebf6;
-    color: #ff99d2;
-    font-size: 0.8rem;
+    /* Arka plan ikincil renk, yazı ana renk */
+    background-color: var(--bg-secondary);
+    color: var(--primary-color);
+    font-size: 0.75rem;
     font-weight: bold;
-    padding: 4px 6px;
-    border-radius: 12px;
+    padding: 4px 8px;
+    border-radius: 20px;
+    margin-top: 2px;
+    margin-left: 4px;
 }
 
 /* Sepet Açılır Kutusu (Dropdown) */
 .cart-dropdown {
     width: 320px;
-    background-color: white;
+
+    /* Arka plan ve gölge değişkenleri */
+    background-color: var(--card-bg);
+    box-shadow: 0 10px 40px var(--shadow-color);
+    border: 1px solid var(--border-color); /* Hafif çerçeve ekledik */
+
     border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     margin-top: 15px;
     overflow: hidden;
-    animation: slideIn 0.3s ease-out; /* Açılış animasyonu */
+    animation: slideIn 0.3s ease-out;
     display: flex;
     flex-direction: column;
 }
 
-/* Açılış Animasyonu Keyframes */
+/* Açılış Animasyonu */
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -79,13 +90,15 @@
 /* Başlık */
 .cart-header {
     padding: 16px 20px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #eee;
+
+    /* Header arka planı ve alt çizgi */
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .cart-header h4 {
     margin: 0;
-    color: #333;
+    color: var(--text-color); /* Yazı rengi */
     font-size: 1.1rem;
 }
 
@@ -95,7 +108,7 @@
     padding: 0;
     margin: 0;
     max-height: 350px;
-    overflow-y: auto; /* Dikey scroll */
+    overflow-y: auto;
 }
 
 /* Tekil Ürün Satırı */
@@ -104,27 +117,31 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px 20px;
-    border-bottom: 1px solid #f1f1f1;
+
+    /* Alt çizgi rengi */
+    border-bottom: 1px solid var(--border-color);
     transition: background-color 0.2s;
+    background-color: var(--card-bg);
 }
 
 .cart-item:hover {
-    background-color: #fafafa;
+    /* Hover'da arka planı biraz değiştir */
+    background-color: var(--bg-secondary);
 }
 
 .item-title {
     font-size: 0.9rem;
-    color: #555;
+    color: var(--text-color); /* Ürün ismi rengi */
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Uzun isimleri ... ile kes */
-    max-width: 180px;
+    text-overflow: ellipsis;
+    max-width: 160px;
 }
 
 .item-price {
     font-weight: 700;
-    color: #2c3e50;
+    color: var(--primary-color); /* Fiyatı ana renk yapalım */
     font-size: 0.95rem;
 }
 
@@ -132,15 +149,18 @@
 .empty-cart-msg {
     padding: 30px;
     text-align: center;
-    color: #888;
+    color: var(--text-muted); /* Sönük yazı rengi */
     font-style: italic;
 }
 
 /* Alt Toplam Alanı */
 .cart-footer {
     padding: 20px;
-    background-color: white;
-    border-top: 1px solid #eee;
+
+    /* Footer arka planı ve üst çizgi */
+    background-color: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -148,38 +168,38 @@
 
 .total-text {
     font-size: 1rem;
-    color: #666;
+    color: var(--text-muted);
 }
 
 .total-amount {
     font-size: 1.2rem;
     font-weight: 800;
-    color: #333;
+    color: var(--text-color);
 }
 
-/* Özel Scrollbar Tasarımı (Webkit tarayıcılar için) */
+/* --- Scrollbar Tasarımı (Dark Mode Uyumlu) --- */
 .cart-items-list::-webkit-scrollbar {
     width: 6px;
 }
 
 .cart-items-list::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--bg-secondary);
 }
 
 .cart-items-list::-webkit-scrollbar-thumb {
-    background: #ccc;
+    background: var(--border-color); /* Kaydırma çubuğu rengi */
     border-radius: 3px;
 }
 
 .cart-items-list::-webkit-scrollbar-thumb:hover {
-    background: #bbb;
+    background: var(--text-muted);
 }
 
 /* Silme Butonu Stili */
 .remove-btn {
     background: transparent;
     border: none;
-    color: #999; /* Gri renk */
+    color: var(--text-muted); /* Varsayılan gri */
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
@@ -194,6 +214,6 @@
 
 /* Üzerine gelince kırmızı olsun */
 .remove-btn:hover {
-    color: #ff4d4d;
-    background-color: #fff0f0;
+    color: #ff4d4d; /* Kırmızı her zaman kırmızıdır */
+    background-color: rgba(255, 77, 77, 0.1); /* Hafif kırmızı zemin */
 }

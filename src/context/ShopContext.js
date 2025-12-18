@@ -11,6 +11,13 @@ export const ShopProvider = ({ children }) => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
+    const [theme, setTheme] = useState(localStorage.getItem("cerenAdenTheme") || "light");
+
+    const toggleTheme = () => {
+        const newTheme = theme === "light" ? "dark" : "light";
+        setTheme(newTheme);
+        localStorage.setItem("cerenAdenTheme", newTheme); // Hafızaya kaydet
+    };
 
     // --- 1. VERİ ÇEKME (API + LocalStorage) ---
     useEffect(() => {
@@ -48,6 +55,11 @@ export const ShopProvider = ({ children }) => {
         localStorage.setItem("cerenAdenCart", JSON.stringify(cart));
     }, [cart]);
 
+
+    useEffect(() => {
+        // <body> etiketine data-theme="dark" veya "light" ekler
+        document.body.setAttribute("data-theme", theme);
+    }, [theme]);
     // --- FONKSİYONLAR ---
 
     const addToCart = (productToAdd) => {
@@ -91,7 +103,7 @@ export const ShopProvider = ({ children }) => {
     const values = {
         products, cart, isCartOpen, loading, searchTerm,
         setSearchTerm, addToCart, removeFromCart, toggleCart,
-        addNewProduct, deleteProduct
+        addNewProduct, deleteProduct, theme, toggleTheme
     };
 
     return <ShopContext.Provider value={values}>{children}</ShopContext.Provider>;

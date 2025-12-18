@@ -1,10 +1,11 @@
-/* src/Product.css */
+/* src/css/Product.css */
 
 /* Ana Kapsayıcı */
 .product-detail-container {
     max-width: 1000px;
     margin: 0 auto;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
 }
 
 /* Yükleniyor ve Hata Mesajları */
@@ -12,26 +13,37 @@
     text-align: center;
     margin-top: 50px;
     font-size: 1.2rem;
-    color: white;
+    /* White yerine değişken kullandık, yoksa light modda görünmez */
+    color: var(--text-muted);
 }
 
 /* Geri Dön Butonu */
 .back-btn {
-    background-color: #ffa9d9;
-    color: white;
+    /* Sabit pembe yerine ana renk değişkeni */
+    background-color: var(--primary-color);
+    color: white; /* Yazı beyaz kalabilir */
+
     margin-bottom: 20px;
     cursor: pointer;
     padding: 10px 20px;
-    border: 1px solid #ffa9d9; /* Border rengi düzeltildi */
+
+    border: 1px solid var(--primary-color);
     border-radius: 20px;
     font-size: 16px;
     font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: all 0.3s ease;
+
+    /* İkon ile yazı hizası için */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .back-btn:hover {
-    background-color: #ff99d2;
-    transform: translateX(-5px); /* Hoverda hafif sola kayma efekti */
+    /* Rengi açmak yerine opacity düşürmek daha modern ve temaya uyumlu */
+    opacity: 0.9;
+    transform: translateX(-5px);
+    box-shadow: 0 4px 10px var(--shadow-color);
 }
 
 /* Ürün Kartı (Beyaz Alan) */
@@ -39,10 +51,16 @@
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
-    background: white;
+
+    /* Değişkenler: Arka plan ve Gölge */
+    background: var(--card-bg);
+    box-shadow: 0 5px 20px var(--shadow-color);
+
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    /* Hafif sınır çizgisi ekledik, dark modda kartlar belli olsun diye */
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
 }
 
 /* --- SOL TARAF (RESİMLER) --- */
@@ -55,6 +73,8 @@
     border-radius: 10px;
     object-fit: cover;
     display: block;
+    /* Resimlere hafif gölge */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .thumbnails-container {
@@ -62,7 +82,7 @@
     gap: 10px;
     margin-top: 15px;
     overflow-x: auto;
-    padding-bottom: 5px; /* Scrollbar için boşluk */
+    padding-bottom: 5px;
 }
 
 .thumb-img {
@@ -70,13 +90,19 @@
     height: 80px;
     border-radius: 8px;
     object-fit: cover;
-    border: 1px solid #eee;
+
+    /* Kenarlık değişkeni */
+    border: 2px solid var(--border-color);
+
     cursor: pointer;
-    transition: border-color 0.2s;
+    transition: all 0.2s;
+    opacity: 0.7;
 }
 
 .thumb-img:hover {
-    border-color: #ffa9d9;
+    opacity: 1;
+    /* Hover olunca ana renk */
+    border-color: var(--primary-color);
 }
 
 /* --- SAĞ TARAF (BİLGİLER) --- */
@@ -88,23 +114,31 @@
 }
 
 .detail-title {
-    color: #333;
+    /* Başlık rengi */
+    color: var(--text-color);
+
     margin-bottom: 10px;
     font-size: 2rem;
+    font-weight: 700;
 }
 
 .detail-category {
-    color: #888;
+    /* Silik yazı rengi */
+    color: var(--text-muted);
+
     font-size: 14px;
     margin-top: 0;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-weight: 600;
 }
 
 .detail-desc {
     line-height: 1.6;
-    color: #555;
+    /* Ana yazı rengi */
+    color: var(--text-color);
     margin-top: 15px;
+    font-size: 1rem;
 }
 
 /* Fiyat Alanı */
@@ -116,15 +150,19 @@
 
 .current-price {
     font-size: 2rem;
-    font-weight: bold;
-    color: #d81b60;
+    font-weight: 800;
+    /* Fiyat ana pembe renk */
+    color: var(--primary-color);
 }
 
 .discount-tag {
     margin-left: 15px;
-    color: #27ae60;
+    color: #27ae60; /* Yeşil her modda okunur */
     font-weight: bold;
-    background-color: #e8f8f5;
+
+    /* Arka planı yumuşak bir değişken yaptık */
+    background-color: var(--input-bg);
+
     padding: 5px 10px;
     border-radius: 8px;
     font-size: 0.9rem;
@@ -134,6 +172,7 @@
 .stock-text {
     font-weight: bold;
     font-size: 1rem;
+    margin-bottom: 15px;
 }
 
 .stock-available {
@@ -146,7 +185,8 @@
 
 /* Buton Düzenlemesi */
 .detail-add-btn {
-    margin-top: 20px;
+    margin-top: 10px;
     max-width: 200px;
-    /* add-btn sınıfı genel stilleri sağlar, burası sadece detay sayfası ayarları */
+    /* add-btn sınıfı (ProductList.css içindeki) zaten stilleri veriyor */
+    /* Sadece boyut ayarı yapıyoruz */
 }

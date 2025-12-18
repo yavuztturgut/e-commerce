@@ -61,7 +61,7 @@ function ProductList({ products, addToCart, searchTerm, setSearchTerm }) {
                 <div className="search-wrapper">
                     <input
                         type="text"
-                        placeholder="Ürün ara... (Örn: Ruj)"
+                        placeholder="Ürün ara... (Örn: Face Studio)"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />

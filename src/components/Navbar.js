@@ -14,32 +14,39 @@ const Navbar = () => {
     const { cart, toggleCart, isCartOpen, removeFromCart, theme, toggleTheme } = useContext(ShopContext);
     return (
         <>
-            <header className="app-header">
-                {/* SOL: Linkler */}
-                <div className="nav-links">
-                    <NavLink to="/category/makeup" className={({isActive}) => isActive ? "active-link" : ""}>Makyaj</NavLink>
-                    <NavLink to="/category/skincare" className={({isActive}) => isActive ? "active-link" : ""}>Cilt Bakımı</NavLink>
-                    <NavLink to="/category/accessories" className={({isActive}) => isActive ? "active-link" : ""}>Aksesuar</NavLink>
-                </div>
+        <header className="app-header">
+            {/* SOL: Linkler */}
+            <div className="nav-links">
+                <NavLink to="/category/makeup" className={({isActive}) => isActive ? "active-link" : ""}>Makyaj</NavLink>
+                <NavLink to="/category/skincare" className={({isActive}) => isActive ? "active-link" : ""}>Cilt Bakımı</NavLink>
+                <NavLink to="/category/accessories" className={({isActive}) => isActive ? "active-link" : ""}>Aksesuar</NavLink>
+            </div>
 
-                <Link to="/" className="logo-link">
-                    <span className="brand-name">CERENADEN</span>
-                    <span className="brand-suffix">SHOP</span>
+            {/* ORTA: Logo */}
+            <Link to="/" className="logo-link">
+                <span className="brand-name">CERENADEN</span>
+                <span className="brand-suffix">SHOP</span>
+            </Link>
+
+            {/* SAĞ: Aksiyonlar (Admin + Tema) */}
+            <div className="nav-actions">
+                <Link to="/admin" className="admin-btn">
+                    Admin
                 </Link>
 
-                {/* SAĞ: Buton */}
-                <Button onClick={toggleTheme}>
+                <Button onClick={toggleTheme} className="theme-toggle-btn">
                     {theme === 'light' ? '☀️' : '🌙'}
                 </Button>
-            </header>
+            </div>
+        </header>
 
-            <Cart
-                cartItems={cart}
-                isOpen={isCartOpen}
-                toggleCart={toggleCart}
-                removeFromCart={removeFromCart}
-            />
-        </>
+    <Cart
+        cartItems={cart}
+        isOpen={isCartOpen}
+        toggleCart={toggleCart}
+        removeFromCart={removeFromCart}
+    />
+</>
     );
 };
 

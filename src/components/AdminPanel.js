@@ -29,11 +29,11 @@ function AdminPanel() {
             { value: 'tonic', label: 'Tonik' }
         ],
         accessories: [
-            { value: 'brush', label: 'Yüzük' },
-            { value: 'sponge', label: 'Bileklik' },
-            { value: 'bag', label: 'Kolye' },
-            { value: 'mirror', label: 'Toka' },
-            { value: 'tool', label: 'Küpe' }
+            { value: 'ring', label: 'Yüzük' },
+            { value: 'bracelet', label: 'Bileklik' },
+            { value: 'necklace', label: 'Kolye' },
+            { value: 'hair_clip', label: 'Toka' },
+            { value: 'earrings', label: 'Küpe' },
         ]
     };
 

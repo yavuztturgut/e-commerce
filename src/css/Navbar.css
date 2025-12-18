@@ -1,11 +1,19 @@
 /* Navbar.css veya App.css */
 
-.app-header{
+/* Navbar.css */
+.app-header {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between; /* Linkleri sola, Butonları en sağa iter */
+    height: 80px;
+    padding: 0 40px;
+    background-color: var(--bg-secondary);
+    position: relative;
+    z-index: 900;
 }
+
 .app-header Button {
-    margin-right: 510px;
     border-radius: 50px;
     background-color: var(--input-bg);
     color: var(--text-color);
@@ -23,7 +31,6 @@
     background-color: var(--text-color);
     color: white;
     border-color: var(--primary-color);
-    transform: scale(1.02);
 }
 
 /* Navbar.css */
@@ -102,3 +109,62 @@
         font-size: 1.4rem; /* Mobilde biraz küçültelim */
     }
 }
+
+/* Navbar.css */
+
+/* Navbar.css */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* İçindekileri sağa yasla */
+    gap: 15px; /* Admin ve Tema butonu arası boşluk */
+    z-index: 1100;
+}
+/* --- ADMIN BUTONU TASARIMI --- */
+.admin-btn {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 50px; /* Hap şeklinde */
+    /* Temaya Uygun Renkler */
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    background-color: transparent;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    overflow: hidden;
+}
+
+/* Hover (Üzerine Gelince) - Night Glam Efekti */
+.admin-btn:hover {
+    border-color: var(--primary-color);
+    color: #fff;
+    background-color: var(--primary-color);
+
+    /* Hafif neon parlama */
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+    transform: translateY(-2px); /* Çok hafif yukarı kalksın */
+}
+
+/* Dark Mode Uyumlu İnce Ayar */
+[data-theme="dark"] .admin-btn {
+    border-color: rgba(255, 255, 255, 0.2); /* Gece modunda sınırları biraz silik yap */
+}
+
+[data-theme="dark"] .admin-btn:hover {
+    border-color: var(--primary-color); /* Hover olunca pembe olsun */
+}
+
+/* --- TEMA BUTONU AYARI (Eskisini güncelle) --- */
+.theme-toggle-btn {
+    margin-right: 180px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+}
+

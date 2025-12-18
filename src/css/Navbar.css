@@ -1,8 +1,12 @@
 /* Navbar.css veya App.css */
 
+.app-header{
+    display: flex;
+    flex-direction: row;
+}
 .app-header Button {
-    margin-left: 510px; /* Senin mevcut konumlandırman */
-    border-radius: 200px;
+    margin-right: 510px;
+    border-radius: 50px;
     background-color: var(--input-bg);
     color: var(--text-color);
     border: 2px solid var(--border-color);
@@ -12,10 +16,89 @@
     transition: all 0.3s ease;
 }
 
+
+
 .app-header Button:hover {
     /* Üzerine gelince senin ana pembe rengin olsun */
     background-color: var(--text-color);
     color: white;
     border-color: var(--primary-color);
     transform: scale(1.02);
+}
+
+/* Navbar.css */
+.nav-links {
+    display: flex;
+    gap: 120px;
+    margin-left: 80px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover, .nav-links a.active-link {
+    color: var(--primary-color);
+}
+
+/* Navbar.css */
+
+/* LOGO KONTEYNERİ (Ortalama ve Link Ayarları) */
+.logo-link {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+
+    text-decoration: none; /* Alt çizgiyi kaldır */
+    display: flex;
+    align-items: center;
+    gap: 8px; /* İki kelime arası boşluk */
+    cursor: pointer;
+    white-space: nowrap; /* Yazının alt satıra düşmesini engelle */
+}
+
+/* "CERENADEN" KISMI */
+.brand-name {
+    font-size: 1.8rem;
+    font-weight: 800; /* Çok kalın */
+    letter-spacing: -1px; /* Harfleri birbirine yaklaştır */
+
+    /* GRADYAN YAZI EFEKTİ (Sihirli Kısım) */
+    background: linear-gradient(135deg, var(--text-color) 30%, var(--primary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    transition: all 0.3s ease;
+}
+
+/* "SHOP" KISMI */
+.brand-suffix {
+    font-size: 1.8rem;
+    font-weight: 300; /* İnce font */
+    color: var(--text-color);
+    letter-spacing: 2px; /* Harfleri biraz aç */
+}
+
+/* --- HOVER EFEKTLERİ (Mouse üzerine gelince) --- */
+.logo-link:hover .brand-name {
+    /* Yazı hafif büyüsün ve parlasın */
+    text-shadow: 0 0 1px var(--primary-color);
+    transform: scale(1.01);
+}
+
+.logo-link:hover .brand-suffix {
+    color: var(--primary-color); /* Rengi pembeye dönsün */
+    transform: scale(1.01);
+}
+
+/* --- MOBİL UYUMU --- */
+@media (max-width: 768px) {
+    .brand-name, .brand-suffix {
+        font-size: 1.4rem; /* Mobilde biraz küçültelim */
+    }
 }

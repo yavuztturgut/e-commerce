@@ -89,7 +89,7 @@ function Product() {
 
                     {/* Kategori bazen null gelebilir, kontrol ediyoruz */}
                     <p className="detail-category">
-                        Kategori: {product.category ? product.category.replace('_', ' ') : product.product_type}
+                        Kategori: {product.product_type ? product.product_type.replace('_', ' ') : product.product_type}
                     </p>
 
                     <p className="detail-desc">

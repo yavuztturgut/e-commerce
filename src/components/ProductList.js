@@ -1,76 +1,74 @@
-// src/ProductList.js
-import React, { useState } from 'react';
+// src/components/ProductList.js
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ShopContext } from '../context/ShopContext';
 import '../css/ProductList.css';
-import { useNavigate } from 'react-router-dom';
-import { ShopContext } from '../context/ShopContext'; // Import et
-import { useContext } from 'react';
 
 function ProductList() {
     const navigate = useNavigate();
+    const { categoryName } = useParams(); // URL parametresi (makeup, skincare, accessories)
     const { products, addToCart, searchTerm, setSearchTerm, loading } = useContext(ShopContext);
+
     // --- STATE TANIMLARI ---
-    const [selectedCategory, setSelectedCategory] = useState("Tümü");
-    const [sortType, setSortType] = useState("default"); // YENİ: Sıralama durumu
+    const [selectedType, setSelectedType] = useState("Tümü");
+    const [sortType, setSortType] = useState("default");
 
-    // 1. Kategorileri Çıkar
-    const categories = ["Tümü", ...new Set(products.map(p => p.product_type))];
+    // URL kategorisi değiştiğinde alt kategori filtresini sıfırla
+    useEffect(() => {
+        setSelectedType("Tümü");
+    }, [categoryName]);
 
-    // 2. FİLTRELEME (Kategori + Arama)
-    const filteredProducts = products.filter(product => {
-        // A. Kategoriye göre
-        const categoryMatch = selectedCategory === "Tümü"
-            ? true
-            : product.product_type === selectedCategory;
+    if (loading) return <div className="loading-container"><div className="spinner"></div></div>;
 
-        // B. Arama kelimesine göre
-        const term = searchTerm || "";
-        const productName = product.name || "";
-        const searchMatch = productName.toLowerCase().includes(term.toLowerCase());
-
-        return categoryMatch && searchMatch;
+    // 1. ADIM: URL'den gelen ANA KATEGORİYE göre filtrele (Makyaj, Cilt Bakımı vb.)
+    const baseProducts = products.filter(product => {
+        if (!categoryName) return true; // Ana sayfadaysak hepsini göster
+        return product.category === categoryName;
     });
 
-    // 3. SIRALAMA (Filtrelenmiş listeyi sırala)
-    // [...filteredProducts] diyerek orijinal diziyi bozmadan kopyasını alıyoruz
+    // 2. ADIM: Mevcut ürünlerden benzersiz ALT TÜRLERİ (product_type) çıkar
+    // Bu sayede "Makyaj" sayfasındayken sadece ruj, maskara gibi butonlar görünür.
+    const subCategories = ["Tümü", ...new Set(baseProducts.map(p => p.product_type).filter(Boolean))];
+
+    // 3. ADIM: ALT TÜR ve ARAMA terimine göre filtrele
+    const filteredProducts = baseProducts.filter(product => {
+        const typeMatch = selectedType === "Tümü"
+            ? true
+            : product.product_type === selectedType;
+
+        const searchMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+
+        return typeMatch && searchMatch;
+    });
+
+    // 4. ADIM: SIRALAMA
     const sortedProducts = [...filteredProducts].sort((a, b) => {
-        // Fiyatları sayıya çevirerek karşılaştır (Güvenlik önlemi)
         const priceA = Number(a.price) || 0;
         const priceB = Number(b.price) || 0;
         const nameA = a.name ? a.name.toLowerCase() : "";
         const nameB = b.name ? b.name.toLowerCase() : "";
 
-        if (sortType === 'price-asc') {
-            return priceA - priceB; // Fiyat Artan
-        }
-        if (sortType === 'price-desc') {
-            return priceB - priceA; // Fiyat Azalan
-        }
-        if (sortType === 'name-asc') {
-            return nameA.localeCompare(nameB); // A-Z
-        }
-        if (sortType === 'name-desc') {
-            return nameB.localeCompare(nameA); // Z-A
-        }
-        return 0; // Varsayılan
+        if (sortType === 'price-asc') return priceA - priceB;
+        if (sortType === 'price-desc') return priceB - priceA;
+        if (sortType === 'name-asc') return nameA.localeCompare(nameB);
+        if (sortType === 'name-desc') return nameB.localeCompare(nameA);
+        return 0;
     });
 
     return (
         <div className="product-container">
-            <div>
             {/* --- ÜST PANEL: ARAMA ve SIRALAMA --- */}
             <div className="controls-header">
-                {/* Arama Kutusu */}
                 <div className="search-wrapper">
                     <input
                         type="text"
-                        placeholder="Ürün ara... (Örn: Face Studio)"
+                        placeholder="Ürün ara..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                     <span className="search-icon">🔍</span>
                 </div>
 
-                {/* YENİ: Sıralama Kutusu */}
                 <div className="sort-wrapper">
                     <select
                         value={sortType}
@@ -78,28 +76,28 @@ function ProductList() {
                         className="sort-select"
                     >
                         <option value="default">Sıralama Seçiniz</option>
-                        <option value="price-asc">Fiyat: Artan (Ucuz ➝ Pahalı)</option>
-                        <option value="price-desc">Fiyat: Azalan (Pahalı ➝ Ucuz)</option>
-                        <option value="name-asc">İsim: A'dan Z'ye</option>
-                        <option value="name-desc">İsim: Z'den A'ya</option>
+                        <option value="price-asc">Fiyat: Artan</option>
+                        <option value="price-desc">Fiyat: Azalan</option>
+                        <option value="name-asc">İsim: A-Z</option>
+                        <option value="name-desc">İsim: Z-A</option>
                     </select>
                 </div>
             </div>
 
-            {/* --- KATEGORİ BUTONLARI --- */}
+            {/* --- DİNAMİK ALT KATEGORİ BUTONLARI --- */}
             <div className="category-filter-bar">
-                {categories.map((cat, index) => (
+                {subCategories.map((type, index) => (
                     <button
                         key={index}
-                        className={`filter-btn ${selectedCategory === cat ? 'active' : ''}`}
-                        onClick={() => setSelectedCategory(cat)}
+                        className={`filter-btn ${selectedType === type ? 'active' : ''}`}
+                        onClick={() => setSelectedType(type)}
                     >
-                        {cat === "Tümü" ? cat : cat.replace('_', ' ')}
+                        {type === "Tümü" ? type : type.replace('_', ' ')}
                     </button>
                 ))}
             </div>
-        </div>
-            {/* --- ÜRÜN LİSTESİ (Sıralanmış listeyi kullanıyoruz) --- */}
+
+            {/* --- ÜRÜN LİSTESİ --- */}
             <div className="product-grid">
                 {sortedProducts.map((product) => (
                     <div
@@ -112,14 +110,14 @@ function ProductList() {
                                 src={product.api_featured_image || product.image_link}
                                 alt={product.name}
                                 className="product-image"
-                                onError={(e) => { e.target.src = "https://via.placeholder.com/300x300?text=No+Image" }}
+                                onError={(e) => { e.target.src = "https://via.placeholder.com/300x300?text=CerenAden" }}
                             />
                         </div>
 
                         <div className="product-info">
                             <h3 className="product-title">{product.name}</h3>
                             <p className="product-price">
-                                {product.price_sign}{Number(product.price).toFixed(2)}
+                                ${Number(product.price).toFixed(2)}
                             </p>
 
                             <button
@@ -140,7 +138,7 @@ function ProductList() {
             {sortedProducts.length === 0 && (
                 <div className="no-result">
                     <h3>Sonuç Bulunamadı 😔</h3>
-                    <p>Farklı bir arama terimi veya kategori deneyebilirsiniz.</p>
+                    <p>Farklı bir arama terimi veya alt kategori deneyebilirsiniz.</p>
                 </div>
             )}
         </div>

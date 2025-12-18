@@ -37,6 +37,7 @@ function App() {
                                     </React.Fragment>
                                 }
                             />
+                            <Route path="/category/:categoryName" element={<ProductList />} />
                             <Route path="/product/:id" element={<Product />} />
                             <Route path="/admin" element={<AdminPanel />} />
                         </Routes>

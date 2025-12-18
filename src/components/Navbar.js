@@ -7,26 +7,32 @@ import cerenaden from '../assets/cerenaden.png'; // Logoyu buraya taşıdığım
 import { ShopContext } from '../context/ShopContext'; // Import et
 import { useContext } from 'react';
 import { Button } from "antd"
+import { NavLink } from 'react-router-dom';
 
 // App.js'ten gelen verileri (props) karşılıyoruz
 const Navbar = () => {
     const { cart, toggleCart, isCartOpen, removeFromCart, theme, toggleTheme } = useContext(ShopContext);
     return (
         <>
-
-            {/* Header Alanı */}
             <header className="app-header">
+                {/* SOL: Linkler */}
+                <div className="nav-links">
+                    <NavLink to="/category/makeup" className={({isActive}) => isActive ? "active-link" : ""}>Makyaj</NavLink>
+                    <NavLink to="/category/skincare" className={({isActive}) => isActive ? "active-link" : ""}>Cilt Bakımı</NavLink>
+                    <NavLink to="/category/accessories" className={({isActive}) => isActive ? "active-link" : ""}>Aksesuar</NavLink>
+                </div>
+
+                <Link to="/" className="logo-link">
+                    <span className="brand-name">CERENADEN</span>
+                    <span className="brand-suffix">SHOP</span>
+                </Link>
+
+                {/* SAĞ: Buton */}
                 <Button onClick={toggleTheme}>
                     {theme === 'light' ? '☀️' : '🌙'}
                 </Button>
-                <img src={cerenaden} className="App-logo" alt="logo" />
-
-
             </header>
 
-
-
-            {/* Sepet Bileşeni */}
             <Cart
                 cartItems={cart}
                 isOpen={isCartOpen}

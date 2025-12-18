@@ -34,6 +34,7 @@ export const ShopProvider = ({ children }) => {
                         ...item,
                         price: Number(item.price) || 10,
                         stock: 20, // Varsayılan stok
+                        category: 'makeup'
                     }));
                     localStorage.setItem("cerenAdenProducts", JSON.stringify(adaptedData));
                     setProducts(adaptedData);

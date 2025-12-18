@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/AdminPanel.css';
 import {notify} from "./Notify"; // CSS dosya adını da değiştirelim
+import { useContext } from 'react';
+import { ShopContext } from '../context/ShopContext';
 
-function AdminPanel({ products, onAddProduct, onDeleteProduct }) {
+function AdminPanel() {
+
     const navigate = useNavigate();
-
+    const { products, addNewProduct, deleteProduct } = useContext(ShopContext);
     const [formData, setFormData] = useState({
         name: '', price: null, product_type: 'lipstick', description: '', image_link: ''
     });
@@ -22,7 +25,7 @@ function AdminPanel({ products, onAddProduct, onDeleteProduct }) {
             ...formData,
             price: parseFloat(formData.price) // Ondalıklı sayı desteği için parseFloat
         };
-        onAddProduct(productToSend);
+        addNewProduct(productToSend);
 
         // Formu temizle
         setFormData({ name: '', price: null, product_type: 'lipstick', description: '', image_link: '' });
@@ -30,8 +33,7 @@ function AdminPanel({ products, onAddProduct, onDeleteProduct }) {
 
     // Silme işleminden önce onay alalım
     const handleDeleteClick = (id) => {
-        notify.error(`Ürün silindi.`)
-        onDeleteProduct(id);
+        deleteProduct(id);
     };
 
     return (

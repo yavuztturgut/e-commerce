@@ -1,9 +1,11 @@
 // src/components/CategoryFilter.js
 import React from 'react';
 import '../css/CategoryFilter.css'; // Birazdan oluşturacağız
+import { ShopContext } from '../context/ShopContext'; // Import et
+import { useContext } from 'react';
 
-function CategoryFilter({ products, selectedCategory, setSelectedCategory }) {
-
+function CategoryFilter() {
+    const  {products, selectedCategory, setSelectedCategory} = useContext(ShopContext);
     // 1. Ürünlerden benzersiz kategorileri (product_type) çıkarıyoruz
     const allCategories = [
         "Tümü",

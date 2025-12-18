@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom';
 import "../css/Navbar.css"
 import Cart from './Cart';
 import cerenaden from '../assets/cerenaden.png'; // Logoyu buraya taşıdığımız için importu burada yapıyoruz
+import { ShopContext } from '../context/ShopContext'; // Import et
+import { useContext } from 'react';
 
 // App.js'ten gelen verileri (props) karşılıyoruz
-const Navbar = ({ cart, isCartOpen, toggleCart, removeFromCart}) => {
+const Navbar = () => {
+    const { cart, toggleCart, isCartOpen, removeFromCart } = useContext(ShopContext);
     return (
         <>
 

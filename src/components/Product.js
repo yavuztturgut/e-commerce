@@ -4,12 +4,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import '../css/ProductList.css';
 import '../css/Product.css';
 import Spinner from "./Spinner";
+import { ShopContext } from '../context/ShopContext'; // Import et
+import { useContext } from 'react';
 
-function Product({ addToCart }) {
+function Product() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const {addToCart} = useContext(ShopContext);
 
     useEffect(() => {
         // 1. Adım: LocalStorage'dan veriyi string olarak çek

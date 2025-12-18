@@ -1,34 +1,44 @@
 // src/Cart.js
 import React from 'react';
 import '../css/Cart.css'; // CSS dosyasını dahil et
+import { ShopContext } from '../context/ShopContext'; // Import et
+import { useContext } from 'react';
 
-function Cart({ cartItems, isOpen, toggleCart, removeFromCart }) {
-    // Sepet toplam tutarı
-    const totalPrice = cartItems.reduce((acc, item) => acc + item.price, 0);
+function Cart() {
+    // 4. Verileri Context'ten çek
+    const { cart, removeFromCart, toggleCart, isCartOpen } = useContext(ShopContext);
 
+    // Eğer Context yüklenmediyse veya cart yoksa boş dizi varsayalım
+    const safeCart = cart || [];
+
+    // Toplam Fiyat Hesabı (Hata veren yer muhtemelen burasıydı)
+    const totalPrice = safeCart.reduce((total, item) => {
+        return total + (Number(item.price) * (item.stock ? 1 : 1));
+        // Not: Stok adedi mantığın varsa burayı (item.price * item.count) yapmalısın.
+    }, 0);
     return (
         <div className="cart-container">
             {/* Sepet Butonu */}
             <button className="cart-toggle-btn" onClick={toggleCart}>
                 <span>🛒 Sepetim</span>
-                {cartItems.length > 0 && (
-                    <span className="cart-count-badge">{cartItems.length}</span>
+                {safeCart.length > 0 && (
+                    <span className="cart-count-badge">{safeCart.length}</span>
                 )}
             </button>
 
             {/* Sepet İçeriği Dropdown */}
-            {isOpen && (
+            {isCartOpen&& (
                 <div className="cart-dropdown">
                     <div className="cart-header">
                         <h4>Sepetiniz</h4>
                     </div>
 
-                    {cartItems.length === 0 ? (
+                    {safeCart.length === 0 ? (
                         <p className="empty-cart-msg">Sepetinizde ürün yok.</p>
                     ) : (
                         <>
                             <ul className="cart-items-list">
-                                {cartItems.map((item, index) => (
+                                {safeCart.map((item, index) => (
                                     <li key={index} className="cart-item">
                                         <span className="item-title">{item.name}</span>
                                         <span className="item-price">${item.price}</span>

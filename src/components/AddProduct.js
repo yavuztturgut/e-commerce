@@ -3,9 +3,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/AddProduct.css'; // Birazdan oluşturacağız
 import {notify} from "./Notify";
+import { ShopContext } from '../context/ShopContext'; // Import et
+import { useContext } from 'react';
 
-function AddProduct({ onAddProduct }) {
+function AddProduct() {
     const navigate = useNavigate();
+    const  { onAddProduct } = useContext(ShopContext);
 
     // Form verilerini tutacak state
     const [formData, setFormData] = useState({

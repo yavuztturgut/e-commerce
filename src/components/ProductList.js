@@ -2,10 +2,12 @@
 import React, { useState } from 'react';
 import '../css/ProductList.css';
 import { useNavigate } from 'react-router-dom';
+import { ShopContext } from '../context/ShopContext'; // Import et
+import { useContext } from 'react';
 
-function ProductList({ products, addToCart, searchTerm, setSearchTerm }) {
+function ProductList() {
     const navigate = useNavigate();
-
+    const { products, addToCart, searchTerm, setSearchTerm, loading } = useContext(ShopContext);
     // --- STATE TANIMLARI ---
     const [selectedCategory, setSelectedCategory] = useState("Tümü");
     const [sortType, setSortType] = useState("default"); // YENİ: Sıralama durumu

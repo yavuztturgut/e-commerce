@@ -12,6 +12,11 @@ export const ShopProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [theme, setTheme] = useState(localStorage.getItem("cerenAdenTheme") || "light");
+    const [favorites, setFavorites] = useState(() => {
+        // Başlangıçta localStorage'dan oku
+        const saved = localStorage.getItem("favorites");
+        return saved ? JSON.parse(saved) : [];
+    });
 
     const toggleTheme = () => {
         const newTheme = theme === "light" ? "dark" : "light";
@@ -63,6 +68,10 @@ export const ShopProvider = ({ children }) => {
     }, [theme]);
     // --- FONKSİYONLAR ---
 
+    useEffect(() => {
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+    }, [favorites]);
+
     const addToCart = (productToAdd) => {
         // Stok düşme mantığı
         const updatedProducts = products.map((p) => {
@@ -100,11 +109,29 @@ export const ShopProvider = ({ children }) => {
         notify.error("Ürün silindi.");
     };
 
+    const toggleFavorite = (product) => {
+        const isExist = favorites.find((f) => f.id === product.id);
+
+        if (isExist) {
+            // Varsa çıkar
+            setFavorites(favorites.filter((f) => f.id !== product.id));
+            // notify.info("Favorilerden çıkarıldı"); // İstersen bildirim açabilirsin
+        } else {
+            // Yoksa ekle
+            setFavorites([...favorites, product]);
+            // notify.success("Favorilere eklendi ❤️");
+        }
+    };
+
+    // 4. FAVORİ KONTROLÜ (Ürün favoride mi?)
+    const isFavorite = (productId) => {
+        return favorites.some((f) => f.id === productId);
+    };
     // --- PAKETLEME ---
     const values = {
         products, cart, isCartOpen, loading, searchTerm,
         setSearchTerm, addToCart, removeFromCart, toggleCart,
-        addNewProduct, deleteProduct, theme, toggleTheme
+        addNewProduct, deleteProduct, theme, toggleTheme, favorites, toggleFavorite, isFavorite
     };
 
     return <ShopContext.Provider value={values}>{children}</ShopContext.Provider>;

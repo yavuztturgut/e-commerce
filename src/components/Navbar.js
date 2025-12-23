@@ -11,7 +11,7 @@ import { NavLink } from 'react-router-dom';
 
 // App.js'ten gelen verileri (props) karşılıyoruz
 const Navbar = () => {
-    const { cart, toggleCart, isCartOpen, removeFromCart, theme, toggleTheme } = useContext(ShopContext);
+    const { cart, toggleCart, isCartOpen, removeFromCart, theme, toggleTheme, favorites } = useContext(ShopContext);
     return (
         <>
         <header className="app-header">
@@ -30,6 +30,9 @@ const Navbar = () => {
 
             {/* SAĞ: Aksiyonlar (Admin + Tema) */}
             <div className="nav-actions">
+                <Link to="/favorites" className="fav-link-btn">
+                    ❤️ <span className="fav-count">({favorites.length})</span>
+                </Link>
                 <Link to="/admin" className="admin-btn">
                     Admin
                 </Link>
@@ -37,6 +40,7 @@ const Navbar = () => {
                 <Button onClick={toggleTheme} className="theme-toggle-btn">
                     {theme === 'light' ? '☀️' : '🌙'}
                 </Button>
+
             </div>
         </header>
 

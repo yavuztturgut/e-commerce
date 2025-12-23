@@ -13,6 +13,7 @@ import ProductList from './components/ProductList';
 import Product from './components/Product';
 import AdminPanel from "./components/AdminPanel";
 import HeroSlider from "./components/HeroSlider";
+import Favorites from "./components/Favorites";
 import './css/App.css';
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
                             <Route path="/category/:categoryName" element={<ProductList />} />
                             <Route path="/product/:id" element={<Product />} />
                             <Route path="/admin" element={<AdminPanel />} />
+                            <Route path="/favorites" element={<Favorites />} />
                         </Routes>
                     </main>
 

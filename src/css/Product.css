@@ -190,3 +190,50 @@
     /* add-btn sınıfı (ProductList.css içindeki) zaten stilleri veriyor */
     /* Sadece boyut ayarı yapıyoruz */
 }
+
+.product-actions{
+    display: flex;
+}
+
+/* Kalp Butonu (Detay Sayfası) */
+.fav-btn {
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    border-radius: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+
+.fav-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Navbar'daki Kalp Linki */
+.fav-link-btn {
+    text-decoration: none;
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+    color: var(--text-color);
+    transition: transform 0.2s;
+}
+
+.fav-link-btn:hover {
+    transform: scale(1.05);
+}
+
+.fav-count {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.fav-icon active{
+    margin-left: 10px;
+}

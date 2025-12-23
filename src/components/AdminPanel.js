@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import '../css/AdminPanel.css';
 import { notify } from "./Notify";
 import { ShopContext } from '../context/ShopContext';
+import Swal from 'sweetalert2';
 
 function AdminPanel() {
     const navigate = useNavigate();
-    const { products, addNewProduct, deleteProduct } = useContext(ShopContext);
+    const { products, addNewProduct, deleteProduct, theme } = useContext(ShopContext);
 
     // 1. ADIM: Kategori ve Alt Tür Eşleştirmesi (Mapping)
     const categoryOptions = {
@@ -90,9 +91,48 @@ function AdminPanel() {
     };
 
     const handleDeleteClick = (id) => {
-        if(window.confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
-            deleteProduct(id);
-        }
+        // Tema kontrolü: Dark modda mıyız?
+        const isDarkMode = theme === 'dark';
+
+        Swal.fire({
+            title: 'Emin misiniz?',
+            text: "Bu ürünü silerseniz geri getiremezsiniz!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Sil!',
+            cancelButtonText: 'Vazgeç',
+
+            // --- DİNAMİK RENK AYARLARI ---
+            // Dark mod ise koyu gri (#1f1f1f), değilse beyaz (#ffffff)
+            background: isDarkMode ? '#1f1f1f' : '#ffffff',
+
+            // Dark mod ise beyaz yazı, değilse koyu gri yazı
+            color: isDarkMode ? '#ffffff' : '#1a1a1a',
+
+            // İkon rengi sabit kalabilir veya onu da değiştirebilirsin
+            iconColor: '#d33',
+
+            // Buton renkleri
+            confirmButtonColor: '#d33',
+            cancelButtonColor: isDarkMode ? '#4b5563' : '#3085d6', // İptal butonu dark modda gözü yormasın
+
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteProduct(id);
+
+                // Başarı Mesajı (Bu da temaya uymalı)
+                Swal.fire({
+                    title: 'Silindi!',
+                    text: 'Ürün mağazadan kaldırıldı.',
+                    icon: 'success',
+                    confirmButtonColor: '#ec4899', // Senin imza pembe rengin
+
+                    // Burası da dinamik
+                    background: isDarkMode ? '#1f1f1f' : '#ffffff',
+                    color: isDarkMode ? '#ffffff' : '#1a1a1a'
+                });
+            }
+        });
     };
 
     return (

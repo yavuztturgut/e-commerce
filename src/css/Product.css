@@ -237,3 +237,74 @@
 .fav-icon active{
     margin-left: 10px;
 }
+
+/* src/css/Product.css dosyasının en altına ekle */
+
+/* --- İLGİLİ ÜRÜNLER BÖLÜMÜ --- */
+.related-products-section {
+    margin-bottom: 40px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 40px;
+    animation: fadeIn 0.8s ease;
+}
+
+.related-title {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    text-align: center; /* Ortada dursun */
+    font-weight: 600;
+}
+
+/* Izgara (Grid) Yapısı */
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive Grid */
+    gap: 20px;
+}
+
+/* Minik Ürün Kartı */
+.related-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.related-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(236, 72, 153, 0.2); /* Pembe gölge */
+    border-color: var(--primary-color);
+}
+
+/* Resim */
+.related-img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain; /* Resim kırpılmasın */
+    background-color: #fff; /* Şeffaf resimler için beyaz zemin */
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Bilgiler */
+.related-info {
+    padding: 10px;
+}
+
+.related-name {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin: 5px 0;
+    font-weight: 500;
+}
+
+.related-price {
+    font-size: 0.95rem;
+    color: var(--primary-color);
+    font-weight: bold;
+}

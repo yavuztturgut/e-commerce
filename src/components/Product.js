@@ -12,12 +12,14 @@ function Product() {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Context'ten fonksiyonları çekiyoruz
-    const { addToCart, toggleFavorite, isFavorite } = useContext(ShopContext);
-
-    // --- HATALI SATIR BURADAYDI, SİLDİK ---
+    // 1. GÜNCELLEME: Context'ten 'products' listesini (allProducts takma adıyla) çekiyoruz.
+    // Böylece diğer ürünlere ulaşıp öneri yapabileceğiz.
+    const { products: allProducts, addToCart, toggleFavorite, isFavorite } = useContext(ShopContext);
 
     useEffect(() => {
+        // 2. GÜNCELLEME: Sayfa açıldığında veya id değiştiğinde en tepeye kaydır.
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
         const storedData = localStorage.getItem('cerenAdenProducts');
 
         if (storedData) {
@@ -35,9 +37,17 @@ function Product() {
     if (loading) return <div className="loading-msg"><Spinner fullPage={true} text="Ürün getiriliyor..." /></div>;
     if (!product) return <div className="error-msg">Ürün bulunamadı.</div>;
 
-    // --- DÜZELTME: isFav ARTIK BURADA ---
-    // Kod buraya ulaştıysa 'product' kesinlikle vardır (null değildir).
+    // Favori kontrolü
     const isFav = isFavorite(product.id);
+
+    // 3. GÜNCELLEME: İlgili Ürünler Mantığı
+    // - Aynı kategoride olanları bul.
+    // - Şu anki ürünü hariç tut (p.id !== product.id).
+    // - Karıştır ve ilk 4 tanesini al.
+    const relatedProducts = allProducts
+        .filter(p => p.category === product.category && p.id !== product.id)
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 4);
 
     return (
         <div className="product-detail-container">
@@ -107,6 +117,35 @@ function Product() {
                     </div>
                 </div>
             </div>
+
+            {/* 4. GÜNCELLEME: İlgili Ürünler Bölümü (Render) */}
+            {relatedProducts.length > 0 && (
+                <div className="related-products-section">
+                    <h3 className="related-title">Bunları da Beğenebilirsiniz ✨</h3>
+                    <div className="related-grid">
+                        {relatedProducts.map((relProduct) => (
+                            <div
+                                key={relProduct.id}
+                                className="related-card"
+                                onClick={() => navigate(`/product/${relProduct.id}`)}
+                            >
+                                <img
+                                    src={relProduct.api_featured_image || relProduct.image_link}
+                                    alt={relProduct.name}
+                                    className="related-img"
+                                    onError={(e) => { e.target.src = "https://via.placeholder.com/200?text=CerenAden" }}
+                                />
+                                <div className="related-info">
+                                    <h4 className="related-name">
+                                        {relProduct.name.length > 20 ? relProduct.name.substring(0, 20) + '...' : relProduct.name}
+                                    </h4>
+                                    <span className="related-price">${Number(relProduct.price).toFixed(2)}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

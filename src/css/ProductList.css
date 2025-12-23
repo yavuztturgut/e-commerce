@@ -329,3 +329,45 @@
         flex-wrap: nowrap;
     }
 }
+
+/* ProductList.css */
+
+/* ProductList.css */
+
+/* Kapsayıcı: Yıldızları ve yazıyı yan yana/alt alta dizer */
+.card-rating {
+    display: flex;
+    gap: 8px; /* Yıldızlar ve sayı arasındaki boşluk */
+    min-height: 24px;
+}
+
+/* Yıldızları saran kutu */
+.stars-wrapper {
+    display: flex;
+    gap: 2px; /* Yıldızlar arası minik boşluk */
+}
+
+/* Genel Yıldız Stili */
+.star {
+    font-size: 1.2rem;
+    color: #e4e5e9; /* Pasif (Boş) Rengi: Açık Gri */
+    line-height: 1;
+}
+
+/* Dolu Yıldız (Sarı/Altın) */
+.star.filled {
+    color: #ffc107;
+}
+
+/* Değerlendirme yoksa tamamen silik görünsün */
+.star.empty-placeholder {
+    color: var(--border-color); /* Daha silik bir gri */
+    opacity: 0.5;
+}
+
+/* Parantez içindeki puan sayısı (4.5) */
+.rating-number {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}

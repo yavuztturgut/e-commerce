@@ -5,6 +5,7 @@ import '../css/ProductList.css';
 import '../css/Product.css';
 import Spinner from "./Spinner";
 import { ShopContext } from '../context/ShopContext';
+import Reviews from './Reviews'; // Import et
 
 function Product() {
     const { id } = useParams();
@@ -117,8 +118,9 @@ function Product() {
                     </div>
                 </div>
             </div>
+            <Reviews productId={product.id} />
 
-            {/* 4. GÜNCELLEME: İlgili Ürünler Bölümü (Render) */}
+            {/* İlgili Ürünler Bölümü (Render) */}
             {relatedProducts.length > 0 && (
                 <div className="related-products-section">
                     <h3 className="related-title">Bunları da Beğenebilirsiniz ✨</h3>

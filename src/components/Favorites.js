@@ -18,7 +18,7 @@ function Favorites() {
 
     return (
         <div className="product-container">
-            <h2 style={{marginLeft: '20px', color: 'var(--primary-color)'}}>Favorilerim ({favorites.length}) ❤️</h2>
+            <h2 style={{marginLeft: '40px', color: 'var(--primary-color)'}}>Favorilerim ({favorites.length}) ❤️</h2>
 
             <div className="product-grid">
                 {favorites.map((product) => (
@@ -27,23 +27,31 @@ function Favorites() {
                         className="product-card"
                         onClick={() => navigate(`/product/${product.id}`)}
                     >
-
-
                         <div className="image-container">
-                            <img src={product.api_featured_image || product.image_link} alt={product.name} className="product-image" />
+                            <img
+                                src={product.api_featured_image || product.image_link}
+                                alt={product.name}
+                                className="product-image"
+                                onError={(e) => { e.target.src = "https://via.placeholder.com/300x300?text=CerenAden" }}
+                            />
                         </div>
+
                         <div className="product-info">
-                            <h3>{product.name}</h3>
-                            <p className="current-price">${Number(product.price).toFixed(2)}</p>
+                            <h3 className="product-title">{product.name}</h3>
+                            <p className="product-price">
+                                ${Number(product.price).toFixed(2)}
+                            </p>
+
                             <button
                                 className="add-btn"
-                                onClick={(e) => { e.stopPropagation(); addToCart(product); }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    addToCart(product);
+                                }}
                             >
                                 Sepete Ekle
                             </button>
-
                         </div>
-
                     </div>
                 ))}
             </div>

@@ -13,6 +13,7 @@
     --shadow-color: rgba(216, 27, 96, 0.15); /* Pembe gölge */
     --input-bg: #fff0f5;
     --spinner-base: #f3f3f3;
+    --mode-color: #A08DEB;
 }
 
 /* --- DARK MODE RENKLERİ (Night Glam) --- */
@@ -27,6 +28,7 @@
     --shadow-color: rgba(0, 0, 0, 0.5); /* Koyu gölge */
     --input-bg: #2d2d2d;
     --spinner-base: #333333;
+    --mode-color: #E9EB8D;
 }
 
 /* 2. GENEL AYARLAR */

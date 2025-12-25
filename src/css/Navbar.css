@@ -1,170 +1,260 @@
-/* Navbar.css veya App.css */
+/* src/css/Navbar.css */
 
-/* Navbar.css */
+/* --- 1. ANA HEADER YAPISI --- */
 .app-header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between; /* Linkleri sola, Butonları en sağa iter */
+    justify-content: space-between;
     height: 80px;
     padding: 0 40px;
     background-color: var(--bg-secondary);
     position: relative;
-    z-index: 900;
-}
-
-.app-header Button {
-    border-radius: 50px;
-    background-color: var(--input-bg);
-    color: var(--text-color);
-    border: 2px solid var(--border-color);
-    padding: 8px 16px; /* Butonun içine biraz boşluk */
-    font-size: 1.2rem; /* İkonu (Ay/Güneş) biraz büyütelim */
-    cursor: pointer;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
     transition: all 0.3s ease;
 }
 
-
-
-.app-header Button:hover {
-    /* Üzerine gelince senin ana pembe rengin olsun */
-    background-color: var(--text-color);
-    color: white;
-    border-color: var(--primary-color);
+/* --- 2. LOGO --- */
+/* Masaüstünde Logoyu Ortalamak İçin */
+.logo-link {
+    /* Mobilde flex düzeni bozulmasın diye absolute iptal edilebilir ama masaüstü için tutuyoruz */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1002;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
-/* Navbar.css */
-.nav-links {
+.brand-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, var(--text-color) 30%, var(--primary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.brand-suffix {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--text-color);
+    letter-spacing: 2px;
+}
+
+/* --- 3. HAMBURGER İKONU (Varsayılan: Gizli) --- */
+.hamburger {
+    display: none; /* Masaüstünde gizli */
+    cursor: pointer;
+    z-index: 1002;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--text-color);
+    border-radius: 3px;
+}
+
+/* --- 4. NAV MENÜ (Linkler ve Aksiyonların Kapsayıcısı) --- */
+/* Masaüstünde bu div sadece bir kapsayıcı gibi davranır, içindekileri gösterir */
+.nav-menu {
     display: flex;
-    gap: 120px;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+/* SOL: Linkler */
+.nav-links {
     margin-left: 80px;
+    display: flex;
+    gap: 125px;
+    z-index: 1001;
 }
 
 .nav-links a {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
-    transition: color 0.3s;
+    transition: color 0.3s ease;
+    font-size: 1rem;
+    position: relative;
 }
 
 .nav-links a:hover, .nav-links a.active-link {
     color: var(--primary-color);
 }
 
-/* Navbar.css */
-
-/* LOGO KONTEYNERİ (Ortalama ve Link Ayarları) */
-.logo-link {
+.nav-links a.active-link::after {
+    content: '';
     position: absolute;
+    bottom: -5px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000;
-
-    text-decoration: none; /* Alt çizgiyi kaldır */
-    display: flex;
-    align-items: center;
-    gap: 8px; /* İki kelime arası boşluk */
-    cursor: pointer;
-    white-space: nowrap; /* Yazının alt satıra düşmesini engelle */
+    width: 5px;
+    height: 5px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
 }
 
-/* "CERENADEN" KISMI */
-.brand-name {
-    font-size: 1.8rem;
-    font-weight: 800; /* Çok kalın */
-    letter-spacing: -1px; /* Harfleri birbirine yaklaştır */
-
-    /* GRADYAN YAZI EFEKTİ (Sihirli Kısım) */
-    background: linear-gradient(135deg, var(--text-color) 30%, var(--primary-color) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-
-    transition: all 0.3s ease;
-}
-
-/* "SHOP" KISMI */
-.brand-suffix {
-    font-size: 1.8rem;
-    font-weight: 300; /* İnce font */
-    color: var(--text-color);
-    letter-spacing: 2px; /* Harfleri biraz aç */
-}
-
-/* --- HOVER EFEKTLERİ (Mouse üzerine gelince) --- */
-.logo-link:hover .brand-name {
-    /* Yazı hafif büyüsün ve parlasın */
-    text-shadow: 0 0 1px var(--primary-color);
-    transform: scale(1.01);
-}
-
-.logo-link:hover .brand-suffix {
-    color: var(--primary-color); /* Rengi pembeye dönsün */
-    transform: scale(1.01);
-}
-
-/* --- MOBİL UYUMU --- */
-@media (max-width: 768px) {
-    .brand-name, .brand-suffix {
-        font-size: 1.4rem; /* Mobilde biraz küçültelim */
-    }
-}
-
-/* Navbar.css */
-
-/* Navbar.css */
+/* SAĞ: Aksiyonlar */
 .nav-actions {
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* İçindekileri sağa yasla */
-    gap: 15px; /* Admin ve Tema butonu arası boşluk */
-    z-index: 1100;
+    margin-right: 250px;
+    gap: 55px;
+    z-index: 1001;
 }
-/* --- ADMIN BUTONU TASARIMI --- */
+
+/* --- AKSİYON BUTONLARI STİLLERİ --- */
+.fav-link-btn {
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.fav-link-btn:hover { color: var(--primary-color); }
+.fav-count { font-size: 0.85rem; font-weight: bold; }
+
 .admin-btn {
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 600;
     padding: 8px 20px;
-    border-radius: 50px; /* Hap şeklinde */
-    /* Temaya Uygun Renkler */
+    border-radius: 50px;
     color: var(--text-color);
     border: 1px solid var(--border-color);
-    background-color: transparent;
     transition: all 0.3s ease;
-    letter-spacing: 0.5px;
-    overflow: hidden;
 }
 
-/* Hover (Üzerine Gelince) - Night Glam Efekti */
 .admin-btn:hover {
     border-color: var(--primary-color);
-    color: #fff;
     background-color: var(--primary-color);
-
-    /* Hafif neon parlama */
-    box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
-    transform: translateY(-2px); /* Çok hafif yukarı kalksın */
+    color: white;
 }
 
-/* Dark Mode Uyumlu İnce Ayar */
-[data-theme="dark"] .admin-btn {
-    border-color: rgba(255, 255, 255, 0.2); /* Gece modunda sınırları biraz silik yap */
-}
-
-[data-theme="dark"] .admin-btn:hover {
-    border-color: var(--primary-color); /* Hover olunca pembe olsun */
-}
-
-/* --- TEMA BUTONU AYARI (Eskisini güncelle) --- */
 .theme-toggle-btn {
-    margin-right: 210px;
-    border-radius: 50px;
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
-    background-color: var(--input-bg);
-    color: var(--text-color);
-    border: 2px solid var(--border-color);
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.2rem;
+    padding: 0 !important;
+    transition: background-color 0.4s ease;
 }
 
+.theme-toggle-btn:hover {
+    background-color: var(--mode-color) !important;
+    border: none !important;
+}
+
+/* =========================================
+   RESPONSIVE BURGER MENÜ (Tablet/Mobil)
+   ========================================= */
+
+@media (max-width: 960px) {
+    .app-header {
+        padding: 0 20px;
+        justify-content: space-between;
+    }
+
+    /* 1. Hamburger İkonunu Göster */
+    .hamburger {
+        display: block;
+        order: 3; /* En sağda dursun */
+    }
+
+    /* Hamburger Aktif (X Şekli) Animasyonu */
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* 2. Logoyu Sola/Ortaya Al */
+    .logo-link {
+        position: static; /* Absolute iptal */
+        transform: none;
+        order: 1; /* En solda dursun */
+    }
+
+    .brand-name { font-size: 1.5rem; }
+    .brand-suffix { font-size: 1.5rem; }
+
+    /* 3. MENÜYÜ GİZLE VE STİLLE (Açılır Kapanır Alan) */
+    .nav-menu {
+        position: fixed;
+        left: -100%; /* Ekran dışına it */
+        top: 80px; /* Header'ın hemen altından başlasın */
+        gap: 0;
+        flex-direction: column;
+        background-color: var(--bg-secondary);
+        width: 100%;
+        height: calc(100vh - 80px); /* Kalan ekranı kapla */
+        text-align: center;
+        transition: 0.3s ease-in-out;
+        justify-content: flex-start; /* İçerikleri yukarıdan başlat */
+        padding-top: 40px;
+        box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Menü Aktif (Açık) Olduğunda */
+    .nav-menu.active {
+        left: 0; /* Ekrana getir */
+    }
+
+    /* Linklerin Mobildeki Hali */
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+        margin-left: 0;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .nav-links a {
+        font-size: 1.4rem; /* Mobilde daha büyük yazı */
+    }
+
+    .nav-links a.active-link::after { display: none; } /* Noktayı kaldır */
+
+    /* Butonların Mobildeki Hali */
+    .nav-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 25px;
+        margin-right: 0;
+    }
+
+    .admin-btn {
+        width: 50%; /* Geniş buton */
+        text-align: center;
+        padding: 12px;
+    }
+
+    .fav-link-btn {
+        font-size: 1.2rem;
+    }
+}

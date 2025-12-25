@@ -81,7 +81,6 @@ function ProductList() {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
-                    <span className="search-icon">🔍</span>
                 </div>
 
                 {/* --- GÜNCELLENEN SELECT MENÜSÜ --- */}

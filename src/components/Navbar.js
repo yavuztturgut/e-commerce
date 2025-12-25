@@ -1,56 +1,79 @@
-// src/Navbar.js
-import React from 'react';
-import { Link } from 'react-router-dom';
-import "../css/Navbar.css"
+// src/components/Navbar.js
+import React, { useState, useContext } from 'react'; // useState eklendi
+import { Link, NavLink } from 'react-router-dom';
+import "../css/Navbar.css";
 import Cart from './Cart';
-import cerenaden from '../assets/cerenaden.png'; // Logoyu buraya taşıdığımız için importu burada yapıyoruz
-import { ShopContext } from '../context/ShopContext'; // Import et
-import { useContext } from 'react';
-import { Button } from "antd"
-import { NavLink } from 'react-router-dom';
+import { ShopContext } from '../context/ShopContext';
+import { Button } from "antd";
 
-// App.js'ten gelen verileri (props) karşılıyoruz
 const Navbar = () => {
     const { cart, toggleCart, isCartOpen, removeFromCart, theme, toggleTheme, favorites } = useContext(ShopContext);
+
+    // Burger menü durumu (Açık/Kapalı)
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    // Menüyü açıp kapatan fonksiyon
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    // Linke tıklayınca menüyü kapatmak için (Mobilde önemli)
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+    };
+
     return (
         <>
-        <header className="app-header">
-            {/* SOL: Linkler */}
-            <div className="nav-links">
-                <NavLink to="/category/makeup" className={({isActive}) => isActive ? "active-link" : ""}>Makyaj</NavLink>
-                <NavLink to="/category/skincare" className={({isActive}) => isActive ? "active-link" : ""}>Cilt Bakımı</NavLink>
-                <NavLink to="/category/accessories" className={({isActive}) => isActive ? "active-link" : ""}>Aksesuar</NavLink>
-            </div>
+            <header className="app-header">
 
-            {/* ORTA: Logo */}
-            <Link to="/" className="logo-link">
-                <span className="brand-name">CERENADEN</span>
-                <span className="brand-suffix">SHOP</span>
-            </Link>
-
-            {/* SAĞ: Aksiyonlar (Admin + Tema) */}
-            <div className="nav-actions">
-                <Link to="/favorites" className="fav-link-btn">
-                    ❤️ <span className="fav-count">({favorites.length})</span>
-                </Link>
-                <Link to="/admin" className="admin-btn">
-                    Admin
+                {/* 1. LOGO (Artık Solda veya Ortada Sabit) */}
+                <Link to="/" className="logo-link" onClick={closeMenu}>
+                    <span className="brand-name">CERENADEN</span>
+                    <span className="brand-suffix">SHOP</span>
                 </Link>
 
-                <Button onClick={toggleTheme} className="theme-toggle-btn">
-                    {theme === 'light' ? '☀️' : '🌙'}
-                </Button>
+                {/* 2. BURGER BUTONU (Sadece Mobilde Görünür) */}
+                <div className={`hamburger ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+                    <span className="bar"></span>
+                    <span className="bar"></span>
+                    <span className="bar"></span>
+                </div>
 
-            </div>
-        </header>
+                {/* 3. MENÜ İÇERİĞİ (Linkler + Butonlar) */}
+                {/* Mobilde 'nav-menu active' sınıfını alarak açılır */}
+                <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
 
-    <Cart
-        cartItems={cart}
-        isOpen={isCartOpen}
-        toggleCart={toggleCart}
-        removeFromCart={removeFromCart}
-    />
-</>
+                    {/* Linkler */}
+                    <div className="nav-links">
+                        <NavLink to="/category/makeup" onClick={closeMenu} className={({isActive}) => isActive ? "active-link" : ""}>Makyaj</NavLink>
+                        <NavLink to="/category/skincare" onClick={closeMenu} className={({isActive}) => isActive ? "active-link" : ""}>Cilt Bakımı</NavLink>
+                        <NavLink to="/category/accessories" onClick={closeMenu} className={({isActive}) => isActive ? "active-link" : ""}>Aksesuar</NavLink>
+                    </div>
+
+                    {/* Aksiyonlar (Admin, Tema, Favori) */}
+                    <div className="nav-actions">
+                        <Link to="/favorites" className="fav-link-btn" onClick={closeMenu}>
+                            ❤️ <span className="fav-count">({favorites.length})</span>
+                        </Link>
+
+                        <Link to="/admin" className="admin-btn" onClick={closeMenu}>
+                            Admin
+                        </Link>
+
+                        <Button onClick={() => { toggleTheme(); closeMenu(); }} className="theme-toggle-btn">
+                            {theme === 'light' ? '☀️' : '🌙'}
+                        </Button>
+                    </div>
+                </div>
+            </header>
+
+            <Cart
+                cartItems={cart}
+                isOpen={isCartOpen}
+                toggleCart={toggleCart}
+                removeFromCart={removeFromCart}
+            />
+        </>
     );
 };
 

@@ -1,5 +1,5 @@
 // src/context/ShopContext.js
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useRef } from "react";
 import { notify } from "../components/Notify"; // Notify yoluna dikkat et
 
 export const ShopContext = createContext();
@@ -17,7 +17,7 @@ export const ShopProvider = ({ children }) => {
         const saved = localStorage.getItem("favorites");
         return saved ? JSON.parse(saved) : [];
     });
-
+    const isNotifying = useRef(false);
     const toggleTheme = () => {
         const newTheme = theme === "light" ? "dark" : "light";
         setTheme(newTheme);
@@ -82,7 +82,15 @@ export const ShopProvider = ({ children }) => {
 
         setCart([...cart, productToAdd]);
         setIsCartOpen(true);
-        notify.success("Ürün sepete eklendi! 🌸");
+        if (!isNotifying.current) {
+            isNotifying.current = true; // Mesaj sürecini başlat
+            notify.success("Ürün sepete eklendi! 🌸");
+
+            // 2 saniye sonra tekrar mesaj gönderilmesine izin ver
+            setTimeout(() => {
+                isNotifying.current = false;
+            }, 2000);
+        }
     };
 
     const removeFromCart = (indexToRemove) => {

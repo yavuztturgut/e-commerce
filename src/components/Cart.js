@@ -1,10 +1,12 @@
 // src/Cart.js
 import React from 'react';
+import {useNavigate} from "react-router-dom";
 import '../css/Cart.css'; // CSS dosyasını dahil et
 import { ShopContext } from '../context/ShopContext'; // Import et
 import { useContext } from 'react';
 
 function Cart() {
+    const navigate = useNavigate();
     // 4. Verileri Context'ten çek
     const { cart, removeFromCart, toggleCart, isCartOpen } = useContext(ShopContext);
 
@@ -57,10 +59,20 @@ function Cart() {
                                 <span className="total-text">Toplam Tutar:</span>
                                 <span className="total-amount">${totalPrice.toFixed(2)}</span>
                             </div>
+                            <button
+                                className="checkout-btn"
+                                onClick={() => {
+                                    toggleCart();
+                                    navigate('/checkout');
+                                }}
+                            >
+                                Ödemeye Geç 💳
+                            </button>
                         </>
                     )}
                 </div>
             )}
+
         </div>
     );
 }

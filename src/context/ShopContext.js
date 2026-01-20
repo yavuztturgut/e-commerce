@@ -101,6 +101,11 @@ export const ShopProvider = ({ children }) => {
 
     const toggleCart = () => setIsCartOpen(!isCartOpen);
 
+    const clearCart = () => {
+        setCart([]); // Sepeti boşalt
+        localStorage.removeItem('cerenAdenCart'); // Hafızadan sil
+    };
+
     // Admin Fonksiyonları
     const addNewProduct = (newProduct) => {
         const productWithId = { ...newProduct, id: Date.now() };
@@ -138,7 +143,7 @@ export const ShopProvider = ({ children }) => {
     // --- PAKETLEME ---
     const values = {
         products, cart, isCartOpen, loading, searchTerm,
-        setSearchTerm, addToCart, removeFromCart, toggleCart,
+        setSearchTerm, addToCart, removeFromCart, toggleCart, clearCart,
         addNewProduct, deleteProduct, theme, toggleTheme, favorites, toggleFavorite, isFavorite
     };
 

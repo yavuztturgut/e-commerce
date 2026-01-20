@@ -216,3 +216,52 @@
     background-color: rgba(255, 77, 77, 0.1); /* Hafif kırmızı zemin */
 }
 
+/* src/css/Cart.css - En Alta Ekle */
+
+/* --- ÖDEMEYE GEÇ BUTONU (Checkout Button) --- */
+.checkout-btn {
+    /* Genişlik ve Hizalama */
+    width: 100%;
+
+    /* Renk ve Gradyan (Night Glam Teması) */
+    background: linear-gradient(135deg, #ff80ab 0%, #d81b60 100%);
+    color: white;
+
+    /* Şekil ve Font */
+    border: none;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    /* Efektler */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Yaylanma efekti */
+    box-shadow: 0 5px 15px rgba(216, 27, 96, 0.4); /* Pembe neon gölge */
+    padding: 5px;
+    /* İçerik Hizalama */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Varsa ikon ile yazı arası */
+}
+
+/* Hover (Üzerine Gelince) */
+.checkout-btn:hover {
+    transform: translateY(-3px); /* Hafif yukarı kalkar */
+    box-shadow: 0 10px 25px rgba(216, 27, 96, 0.6); /* Gölge parlar ve büyür */
+    filter: brightness(1.1); /* Rengi biraz parlatır */
+}
+
+/* Active (Tıklanınca) */
+.checkout-btn:active {
+    transform: scale(0.97); /* Hafif içe göçer */
+    box-shadow: 0 2px 10px rgba(216, 27, 96, 0.3);
+}
+
+/* Disabled (Sepet Boşsa) Durumu - Opsiyonel */
+.checkout-btn:disabled {
+    background: var(--border-color);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}

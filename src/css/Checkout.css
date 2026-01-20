@@ -1,0 +1,237 @@
+/* src/css/Checkout.css */
+
+.checkout-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 35px;
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    min-height: 60vh;
+}
+
+/* --- ADIM GÖSTERGESİ (STEPPER) --- */
+.steps-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+/* Çizgi */
+.steps-indicator::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--border-color);
+    z-index: 0;
+}
+
+.step {
+    position: relative;
+    z-index: 1;
+    background-color: var(--card-bg);
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+}
+
+.step-circle {
+    width: 35px;
+    height: 35px;
+    background-color: var(--input-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.step.active .step-circle {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 0 15px rgba(216, 27, 96, 0.4);
+}
+
+.step.active span {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* --- FORM ALANLARI --- */
+.checkout-form {
+    animation: fadeIn 0.5s ease;
+    margin-right: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--input-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(216, 27, 96, 0.1);
+}
+
+.row {
+    display: flex;
+    gap: 40px;
+}
+
+.col {
+    flex: 1;
+}
+
+/* --- SANAL KREDİ KARTI --- */
+.credit-card-preview {
+    width: 100%;
+    max-width: 400px;
+    height: 240px;
+    margin: 0 auto 30px auto;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #2c3e50 0%, #000000 100%);
+    position: relative;
+    padding: 25px;
+    color: white;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    overflow: hidden;
+    /* Night Glam Temasına Uygun Parlama */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Kartın üzerindeki dekoratif daireler */
+.credit-card-preview::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(216, 27, 96, 0.4) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.card-chip {
+    width: 50px;
+    height: 35px;
+    background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%);
+    border-radius: 6px;
+    margin-bottom: 40px;
+}
+
+.card-number-display {
+    font-size: 1.6rem;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 2px rgba(0,0,0,0.5);
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.card-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 4px;
+}
+
+.card-value {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+}
+
+/* --- BUTONLAR --- */
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    padding: 12px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff80ab 0%, #d81b60 100%);
+    color: white;
+    border: none;
+    padding: 12px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(216, 27, 96, 0.3);
+}
+
+/* --- BAŞARI EKRANI --- */
+.success-screen {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.check-icon {
+    font-size: 5rem;
+    color: #4cd137;
+    margin-bottom: 20px;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+}
+
+/* Mobil Uyum */
+@media (max-width: 600px) {
+    .credit-card-preview {
+        height: 200px;
+        padding: 20px;
+    }
+    .card-number-display {
+        font-size: 1.2rem;
+    }
+    .row {
+        flex-direction: column;
+        gap: 0;
+    }
+}

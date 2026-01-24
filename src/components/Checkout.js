@@ -24,7 +24,7 @@ const Checkout = () => {
             // Opsiyonel: Kullanıcıya neden atıldığını söyleyebilirsin
             if (!isNotifying.current) {
                 isNotifying.current = true;
-                notify.info("Sepetiniz boş olduğu için anasayfaya yönlendirildiniz.");
+                notify.error("Sepetiniz boş olduğu için anasayfaya yönlendirildiniz.");
                 setTimeout(() => isNotifying.current = false, 2000);
             }
         }

@@ -66,6 +66,7 @@ function Product() {
                         src={product.api_featured_image || product.image_link}
                         alt={product.name}
                         className="main-img"
+                        loading="lazy"
                         onError={(e) => { e.target.src = "https://via.placeholder.com/400x400?text=No+Image" }}
                     />
 
@@ -75,7 +76,7 @@ function Product() {
                                 <div
                                     key={i}
                                     className="thumb-img"
-                                    style={{ backgroundColor: color.hex_value, width: '30px', height: '30px', borderRadius: '50%', cursor:'default' }}
+                                    style={{ backgroundColor: color.hex_value, width: '30px', height: '30px', borderRadius: '50%', cursor: 'default' }}
                                     title={color.colour_name}
                                 ></div>
                             ))}
@@ -135,6 +136,7 @@ function Product() {
                                     src={relProduct.api_featured_image || relProduct.image_link}
                                     alt={relProduct.name}
                                     className="related-img"
+                                    loading="lazy"
                                     onError={(e) => { e.target.src = "https://via.placeholder.com/200?text=CerenAden" }}
                                 />
                                 <div className="related-info">

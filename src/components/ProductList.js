@@ -123,6 +123,7 @@ function ProductList() {
                                     src={product.api_featured_image || product.image_link}
                                     alt={product.name}
                                     className="product-image"
+                                    loading="lazy"
                                     onError={(e) => { e.target.src = "https://via.placeholder.com/300x300?text=CerenAden" }}
                                 />
                             </div>

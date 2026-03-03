@@ -1,92 +1,85 @@
 // src/context/ShopContext.js
 import React, { createContext, useState, useEffect, useRef } from "react";
-import { notify } from "../components/Notify"; // Notify yoluna dikkat et
+import { notify } from "../components/Notify";
+import { useQuery } from '@tanstack/react-query';
 
 export const ShopContext = createContext();
 
 export const ShopProvider = ({ children }) => {
+    // --- 1. VERİ ÇEKME (React Query) ---
+    const { data: remoteProducts, isLoading: loading } = useQuery({
+        queryKey: ['maybellineProducts'],
+        queryFn: async () => {
+            const res = await fetch("https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline");
+            const data = await res.json();
+            return data.map((item) => ({
+                ...item,
+                price: Number(item.price) || 10,
+                stock: 20,
+                category: 'makeup'
+            }));
+        },
+        staleTime: 1000 * 60 * 10, // 10 dakika taze kalsın
+    });
+
     // --- TÜM STATE'LER BURADA ---
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const [isCartOpen, setIsCartOpen] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [theme, setTheme] = useState(localStorage.getItem("cerenAdenTheme") || "light");
     const [favorites, setFavorites] = useState(() => {
-        // Başlangıçta localStorage'dan oku
         const saved = localStorage.getItem("favorites");
         return saved ? JSON.parse(saved) : [];
     });
     const isNotifying = useRef(false);
-    const toggleTheme = () => {
-        const newTheme = theme === "light" ? "dark" : "light";
-        setTheme(newTheme);
-        localStorage.setItem("cerenAdenTheme", newTheme); // Hafızaya kaydet
-    };
 
-    // --- 1. VERİ ÇEKME (API + LocalStorage) ---
+    // remoteProducts geldiğinde veya değiştiğinde local state'i güncelle
     useEffect(() => {
-        const localData = localStorage.getItem("cerenAdenProducts");
+        if (remoteProducts) {
+            // Eğer veriler API'den başarılı geldiyse local storage'ı da besleyelim (fallback için)
+            localStorage.setItem("cerenAdenProducts", JSON.stringify(remoteProducts));
 
-        if (localData) {
-            setProducts(JSON.parse(localData));
-            setLoading(false);
-        } else {
-            fetch("https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline")
-                .then((res) => res.json())
-                .then((data) => {
-                    const adaptedData = data.map((item) => ({
-                        ...item,
-                        price: Number(item.price) || 10,
-                        stock: 20, // Varsayılan stok
-                        category: 'makeup'
-                    }));
-                    localStorage.setItem("cerenAdenProducts", JSON.stringify(adaptedData));
-                    setProducts(adaptedData);
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    console.error(err);
-                    setLoading(false);
-                });
+            // Eğer zaten bir manuel ürün eklenmemişse direkt setle
+            // Yoksa manuel eklenenlerle birleştir (Basitlik için şimdilik sadece API verisini setliyoruz)
+            setProducts(remoteProducts);
         }
+    }, [remoteProducts]);
 
-        // Sepeti de hafızadan geri getir
+    useEffect(() => {
         const localCart = localStorage.getItem("cerenAdenCart");
         if (localCart) setCart(JSON.parse(localCart));
     }, []);
 
-    // --- 2. SEPET DEĞİŞİNCE KAYDET ---
+    const toggleTheme = () => {
+        const newTheme = theme === "light" ? "dark" : "light";
+        setTheme(newTheme);
+        localStorage.setItem("cerenAdenTheme", newTheme);
+    };
+
     useEffect(() => {
         localStorage.setItem("cerenAdenCart", JSON.stringify(cart));
     }, [cart]);
 
-
     useEffect(() => {
-        // <body> etiketine data-theme="dark" veya "light" ekler
         document.body.setAttribute("data-theme", theme);
     }, [theme]);
-    // --- FONKSİYONLAR ---
 
     useEffect(() => {
         localStorage.setItem("favorites", JSON.stringify(favorites));
     }, [favorites]);
 
     const addToCart = (productToAdd) => {
-        // Stok düşme mantığı
         const updatedProducts = products.map((p) => {
             if (p.id === productToAdd.id) return { ...p, stock: (p.stock || 20) - 1 };
             return p;
         });
-        setProducts(updatedProducts); // Stok güncel halini kaydet
-
+        setProducts(updatedProducts);
         setCart([...cart, productToAdd]);
         setIsCartOpen(true);
         if (!isNotifying.current) {
-            isNotifying.current = true; // Mesaj sürecini başlat
+            isNotifying.current = true;
             notify.success("Ürün sepete eklendi! 🌸");
-
-            // 2 saniye sonra tekrar mesaj gönderilmesine izin ver
             setTimeout(() => {
                 isNotifying.current = false;
             }, 2000);
@@ -102,11 +95,10 @@ export const ShopProvider = ({ children }) => {
     const toggleCart = () => setIsCartOpen(!isCartOpen);
 
     const clearCart = () => {
-        setCart([]); // Sepeti boşalt
-        localStorage.removeItem('cerenAdenCart'); // Hafızadan sil
+        setCart([]);
+        localStorage.removeItem('cerenAdenCart');
     };
 
-    // Admin Fonksiyonları
     const addNewProduct = (newProduct) => {
         const productWithId = { ...newProduct, id: Date.now() };
         const updatedList = [productWithId, ...products];
@@ -124,23 +116,17 @@ export const ShopProvider = ({ children }) => {
 
     const toggleFavorite = (product) => {
         const isExist = favorites.find((f) => f.id === product.id);
-
         if (isExist) {
-            // Varsa çıkar
             setFavorites(favorites.filter((f) => f.id !== product.id));
-            // notify.info("Favorilerden çıkarıldı"); // İstersen bildirim açabilirsin
         } else {
-            // Yoksa ekle
             setFavorites([...favorites, product]);
-            // notify.success("Favorilere eklendi ❤️");
         }
     };
 
-    // 4. FAVORİ KONTROLÜ (Ürün favoride mi?)
     const isFavorite = (productId) => {
         return favorites.some((f) => f.id === productId);
     };
-    // --- PAKETLEME ---
+
     const values = {
         products, cart, isCartOpen, loading, searchTerm,
         setSearchTerm, addToCart, removeFromCart, toggleCart, clearCart,

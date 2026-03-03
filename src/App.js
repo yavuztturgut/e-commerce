@@ -3,6 +3,7 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './css/App.css';
 
 // React Query
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -21,8 +22,6 @@ const AdminPanel = lazy(() => import('./components/AdminPanel'));
 const Favorites = lazy(() => import('./components/Favorites'));
 const Checkout = lazy(() => import('./components/Checkout'));
 const HeroSlider = lazy(() => import('./components/HeroSlider'));
-
-import './css/App.css';
 
 // QueryClient oluşturulur
 const queryClient = new QueryClient({

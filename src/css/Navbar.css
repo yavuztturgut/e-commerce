@@ -9,10 +9,15 @@
     height: 80px;
     padding: 0 40px;
     background-color: var(--bg-secondary);
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 1000;
     border-bottom: 1px solid var(--border-color);
     transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px var(--shadow-color);
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
 }
 
 /* --- 2. LOGO --- */
@@ -50,7 +55,8 @@
 
 /* --- 3. HAMBURGER İKONU (Varsayılan: Gizli) --- */
 .hamburger {
-    display: none; /* Masaüstünde gizli */
+    display: none;
+    /* Masaüstünde gizli */
     cursor: pointer;
     z-index: 1002;
 }
@@ -91,7 +97,8 @@
     position: relative;
 }
 
-.nav-links a:hover, .nav-links a.active-link {
+.nav-links a:hover,
+.nav-links a.active-link {
     color: var(--primary-color);
 }
 
@@ -126,8 +133,14 @@
     gap: 5px;
 }
 
-.fav-link-btn:hover { color: var(--primary-color); }
-.fav-count { font-size: 0.85rem; font-weight: bold; }
+.fav-link-btn:hover {
+    color: var(--primary-color);
+}
+
+.fav-count {
+    font-size: 0.85rem;
+    font-weight: bold;
+}
 
 .admin-btn {
     text-decoration: none;
@@ -179,50 +192,65 @@
     /* 1. Hamburger İkonunu Göster */
     .hamburger {
         display: block;
-        order: 3; /* En sağda dursun */
+        order: 3;
+        /* En sağda dursun */
     }
 
     /* Hamburger Aktif (X Şekli) Animasyonu */
     .hamburger.active .bar:nth-child(2) {
         opacity: 0;
     }
+
     .hamburger.active .bar:nth-child(1) {
         transform: translateY(8px) rotate(45deg);
     }
+
     .hamburger.active .bar:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
     }
 
     /* 2. Logoyu Sola/Ortaya Al */
     .logo-link {
-        position: static; /* Absolute iptal */
+        position: static;
+        /* Absolute iptal */
         transform: none;
-        order: 1; /* En solda dursun */
+        order: 1;
+        /* En solda dursun */
     }
 
-    .brand-name { font-size: 1.5rem; }
-    .brand-suffix { font-size: 1.5rem; }
+    .brand-name {
+        font-size: 1.5rem;
+    }
+
+    .brand-suffix {
+        font-size: 1.5rem;
+    }
 
     /* 3. MENÜYÜ GİZLE VE STİLLE (Açılır Kapanır Alan) */
     .nav-menu {
         position: fixed;
-        left: -100%; /* Ekran dışına it */
-        top: 80px; /* Header'ın hemen altından başlasın */
+        left: -100%;
+        /* Ekran dışına it */
+        top: 80px;
+        /* Header'ın hemen altından başlasın */
         gap: 0;
         flex-direction: column;
         background-color: var(--bg-secondary);
         width: 100%;
-        height: calc(100vh - 80px); /* Kalan ekranı kapla */
+        height: calc(100vh - 80px);
+        /* Kalan ekranı kapla */
         text-align: center;
         transition: 0.3s ease-in-out;
-        justify-content: flex-start; /* İçerikleri yukarıdan başlat */
+        justify-content: flex-start;
+        /* İçerikleri yukarıdan başlat */
         padding-top: 40px;
-        box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
     }
 
     /* Menü Aktif (Açık) Olduğunda */
     .nav-menu.active {
-        left: 0; /* Ekrana getir */
+        left: 0;
+        /* Ekrana getir */
     }
 
     /* Linklerin Mobildeki Hali */
@@ -235,10 +263,15 @@
     }
 
     .nav-links a {
-        font-size: 1.4rem; /* Mobilde daha büyük yazı */
+        font-size: 1.4rem;
+        /* Mobilde daha büyük yazı */
     }
 
-    .nav-links a.active-link::after { display: none; } /* Noktayı kaldır */
+    .nav-links a.active-link::after {
+        display: none;
+    }
+
+    /* Noktayı kaldır */
 
     /* Butonların Mobildeki Hali */
     .nav-actions {
@@ -249,7 +282,8 @@
     }
 
     .admin-btn {
-        width: 50%; /* Geniş buton */
+        width: 50%;
+        /* Geniş buton */
         text-align: center;
         padding: 12px;
     }
